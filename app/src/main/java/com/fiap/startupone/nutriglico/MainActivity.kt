@@ -1,47 +1,21 @@
 package com.fiap.startupone.nutriglico
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.fiap.startupone.nutriglico.features.auth.ui.LoginActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Instala a SplashScreen
+        installSplashScreen()
+
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            NutriGlicoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    NutriGlicoTheme {
-        Greeting("Android")
+        // Inicia a próxima tela (Login)
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish() // Finaliza a SplashScreen para não ficar no back stack
     }
 }
