@@ -1,15 +1,39 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+# Sistema Operacional
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+Thumbs.db
+
+# IDEs
+.idea/
+*.iml
+
+# Build
+.gradle/
+build/
+captures/
+.externalNativeBuild/
+
+# Configurações do Android Studio
 local.properties
+
+# Logs
+*.log
+
+# Arquivos de cache
+.cache/
+*.apk
+*.ap_
+*.keystore
+
+# Configuração de Git
+.git/
+*.orig
+
+# Arquivos de teste
+.idea/modules.xml
+.idea/workspace.xml
+
+# Outras extensões e arquivos temporários
+*.swp
+*.swo
+*.bak
+*.tmp
