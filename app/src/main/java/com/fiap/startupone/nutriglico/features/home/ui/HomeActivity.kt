@@ -74,6 +74,21 @@ fun HomeContent(modifier: Modifier = Modifier) {
             .padding(16.dp),
         verticalArrangement = Arrangement.Top
     ) {
+        // 1. Minhas Medições
+        SectionTitle(title = "Minhas Medições")
+        MeasurementCard(icon = R.drawable.ic_glucose, title = "Glicemia", value = "Sem Registro")
+        MeasurementCard(icon = R.drawable.ic_monitor_weight, title = "Peso", value = "Sem Registro")
+        MeasurementCard(icon = R.drawable.ic_vital_signs, title = "Pressão Arterial", value = "Sem Registro")
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 2. Meus Registros
+        SectionTitle(title = "Meus Registros")
+        SimpleCard(title = "Histórico de Registros", subtitle = "1 registro", action = "Ver mais")
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 3. Minhas Refeições
         SectionTitle(title = "Minhas Refeições")
         SimpleCard(
             title = "Refeição",
@@ -83,26 +98,16 @@ fun HomeContent(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // 4. Minhas Medicações
         SectionTitle(title = "Minhas Medicações")
         SimpleCard(
             title = "Medicamentos",
             subtitle = "Sem Registro",
             action = "Adicionar agora :)"
         )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        SectionTitle(title = "Minhas Medições")
-        MeasurementCard(icon = R.drawable.ic_glucose, title = "Glicemia", value = "Sem Registro")
-        MeasurementCard(icon = R.drawable.ic_monitor_weight, title = "Peso", value = "Sem Registro")
-        MeasurementCard(icon = R.drawable.ic_vital_signs, title = "Pressão Arterial", value = "Sem Registro")
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        SectionTitle(title = "Meus Registros")
-        SimpleCard(title = "Histórico de Registros", subtitle = "1 registro", action = "Ver mais")
     }
 }
+
 
 
 @Composable
@@ -133,7 +138,7 @@ fun MeasurementCard(icon: Int, title: String, value: String) {
             Icon(
                 painter = painterResource(id = icon),
                 contentDescription = null,
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(28.dp),
                 tint = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -142,7 +147,7 @@ fun MeasurementCard(icon: Int, title: String, value: String) {
                 Text(text = value, style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = { /* Action */ }) {
+            IconButton(onClick = {/* Action */ }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_add),
                     contentDescription = "Adicionar"
