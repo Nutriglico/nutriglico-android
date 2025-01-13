@@ -1,5 +1,6 @@
 package com.fiap.startupone.nutriglico.features.home.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +21,8 @@ import com.fiap.startupone.nutriglico.features.home.viewmodel.HomeViewModel
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.platform.LocalContext
+import com.fiap.startupone.nutriglico.features.glucose.register.ui.RegisterGlucoseActivity
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +70,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
 @Composable
 fun HomeContent(modifier: Modifier = Modifier) {
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
 
     Column(
         modifier = modifier
@@ -81,7 +85,10 @@ fun HomeContent(modifier: Modifier = Modifier) {
             title = "Glicemia",
             description = "120 mg/dL",
             rightIcon = R.drawable.ic_add,
-            onClick = { /* Ação ao clicar no card */ }
+            onClick = {
+                val intent = Intent(context, RegisterGlucoseActivity::class.java)
+                context.startActivity(intent)
+            }
         )
         StandardCard(
             icon = R.drawable.ic_monitor_weight,
