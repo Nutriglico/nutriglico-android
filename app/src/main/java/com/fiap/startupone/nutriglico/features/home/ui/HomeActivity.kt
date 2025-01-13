@@ -76,39 +76,65 @@ fun HomeContent(modifier: Modifier = Modifier) {
     ) {
         // 1. Minhas Medições
         SectionTitle(title = "Minhas Medições")
-        MeasurementCard(icon = R.drawable.ic_glucose, title = "Glicemia", value = "Sem Registro")
-        MeasurementCard(icon = R.drawable.ic_monitor_weight, title = "Peso", value = "Sem Registro")
-        MeasurementCard(icon = R.drawable.ic_vital_signs, title = "Pressão Arterial", value = "Sem Registro")
+        StandardCard(
+            icon = R.drawable.ic_glucose,
+            title = "Glicemia",
+            description = "120 mg/dL",
+            rightIcon = R.drawable.ic_add,
+            onClick = { /* Ação ao clicar no card */ }
+        )
+        StandardCard(
+            icon = R.drawable.ic_monitor_weight,
+            title = "Peso",
+            description = "70 kg",
+            rightIcon = R.drawable.ic_add,
+            onClick = { /* Ação ao clicar no card */ }
+        )
+        StandardCard(
+            icon = R.drawable.ic_vital_signs,
+            title = "Pressão Arterial",
+            description = "120/80 mmHg",
+            rightIcon = R.drawable.ic_add,
+            onClick = { /* Ação ao clicar no card */ }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // 2. Meus Registros
         SectionTitle(title = "Meus Registros")
-        SimpleCard(title = "Histórico de Registros", subtitle = "1 registro", action = "Ver mais")
+        StandardCard(
+            icon = R.drawable.ic_history,
+            title = "Histórico de Registros",
+            description = "1 registro",
+            rightIcon = R.drawable.ic_chevron_right,
+            onClick = { /* Ação ao clicar no card */ }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // 3. Minhas Refeições
         SectionTitle(title = "Minhas Refeições")
-        SimpleCard(
+        StandardCard(
+            icon = R.drawable.ic_food,
             title = "Refeição",
-            subtitle = "Sem Registro",
-            action = "Adicionar agora :)"
+            description = "Sem Registro",
+            rightIcon = R.drawable.ic_add,
+            onClick = { /* Ação ao clicar no card */ }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // 4. Minhas Medicações
         SectionTitle(title = "Minhas Medicações")
-        SimpleCard(
+        StandardCard(
+            icon = R.drawable.ic_pill,
             title = "Medicamentos",
-            subtitle = "Sem Registro",
-            action = "Adicionar agora :)"
+            description = "Sem Registro",
+            rightIcon = R.drawable.ic_add,
+            onClick = { /* Ação ao clicar no card */ }
         )
     }
 }
-
-
 
 @Composable
 fun SectionTitle(title: String) {
@@ -120,7 +146,13 @@ fun SectionTitle(title: String) {
 }
 
 @Composable
-fun MeasurementCard(icon: Int, title: String, value: String) {
+fun StandardCard(
+    icon: Int,
+    title: String,
+    description: String?,
+    rightIcon: Int,
+    onClick: () -> Unit
+) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
@@ -142,42 +174,24 @@ fun MeasurementCard(icon: Int, title: String, value: String) {
                 tint = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text(text = title, style = MaterialTheme.typography.bodyLarge)
-                Text(text = value, style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = {/* Action */ }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_add),
-                    contentDescription = "Adicionar"
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+                )
+                Text(
+                    text = description ?: "Sem Registro",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Gray
                 )
             }
-        }
-    }
-}
-
-@Composable
-fun SimpleCard(title: String, subtitle: String, action: String) {
-    Card(
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White) // Fundo branco
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(text = title, style = MaterialTheme.typography.bodyLarge)
-                Text(text = subtitle, style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(text = action, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+            IconButton(onClick = onClick) {
+                Icon(
+                    painter = painterResource(id = rightIcon),
+                    contentDescription = null
+                )
             }
         }
     }
@@ -189,13 +203,23 @@ fun BottomNavigationBar() {
         containerColor = Color(0xFFF8F8F8) // Cor gelo
     ) {
         NavigationBarItem(
-            icon = { Icon(painterResource(id = R.drawable.ic_food), contentDescription = "Refeição") },
+            icon = {
+                Icon(
+                    painterResource(id = R.drawable.ic_food),
+                    contentDescription = "Refeição"
+                )
+            },
             label = { Text("Refeição") },
             selected = false,
             onClick = { /* Navigate */ }
         )
         NavigationBarItem(
-            icon = { Icon(painterResource(id = R.drawable.ic_glucose), contentDescription = "Glicemia") },
+            icon = {
+                Icon(
+                    painterResource(id = R.drawable.ic_glucose),
+                    contentDescription = "Glicemia"
+                )
+            },
             label = { Text("Glicemia") },
             selected = true,
             onClick = { /* Navigate */ }
