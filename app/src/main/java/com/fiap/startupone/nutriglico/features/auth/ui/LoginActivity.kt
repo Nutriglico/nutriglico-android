@@ -80,8 +80,8 @@ class LoginActivity : ComponentActivity() {
     }
 
     private fun validateCredentials(email: String, password: String): Boolean {
-        // Lógica simples de validação (exemplo)
-        return email.isNotEmpty() && password.isNotEmpty() && email.contains("@")
+        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
+        return email.matches(emailRegex) && password.length >= 6
     }
 }
 
@@ -91,120 +91,137 @@ fun LoginScreen(
     onForgotPassword: () -> Unit,
     onSignUp: () -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("teste@exemplo.com") }
+    var password by remember { mutableStateOf("123456") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var emailError by remember { mutableStateOf(false) }
+    var passwordError by remember { mutableStateOf(false) }
 
-    NutriGlicoTheme {
-        Scaffold { paddingValues ->
-            Box(
+    Scaffold { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
+                // Logo
+                Image(
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = "Logo da Plataforma",
+                    modifier = Modifier
+                        .size(120.dp)
+                )
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                // Campo de E-mail
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("E-mail") },
+                    isError = emailError,
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                if (emailError) {
+                    Text(
+                        text = "E-mail inválido",
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Campo de Senha
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it; passwordError = false },
+                    label = { Text("Senha") },
+                    isError = passwordError,
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                            Icon(
+                                painter = painterResource(
+                                    id = if (passwordVisible) R.drawable.ic_visibility_off else R.drawable.ic_visibility
+                                ),
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                if (passwordError) {
+                    Text(
+                        text = "Senha deve ter pelo menos 6 caracteres",
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Botão "Esqueci Minha Senha"
+                TextButton(
+                    onClick = onForgotPassword,
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Text(
+                        text = "Esqueci minha senha",
+                        style = TextStyle(
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 14.sp
+                        )
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Botão de Login
+                Button(
+                    onClick = {
+                        emailError = email.isEmpty() || !email.contains("@")
+                        passwordError = password.length < 6
+                        if (!emailError && !passwordError) {
+                            onLogin(email, password)
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .height(50.dp)
                 ) {
-                    // Logo
-                    Image(
-                        painter = painterResource(id = R.drawable.logo),
-                        contentDescription = "Logo da Plataforma",
-                        modifier = Modifier
-                            .size(120.dp)
-                            .padding(bottom = 32.dp)
+                    Text("Login", style = MaterialTheme.typography.bodyLarge)
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Texto e botão de SignUp
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Não possui uma conta?",
+                        style = TextStyle(fontSize = 14.sp, color = Color.Gray)
                     )
-
-                    // Campo de E-mail
-                    OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        label = { Text("E-mail") },
-                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
-                        modifier = Modifier.fillMaxWidth()
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ClickableText(
+                        text = buildAnnotatedString { append("Cadastre-se") },
+                        style = TextStyle(
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        onClick = { onSignUp() }
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Campo de Senha
-                    OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
-                        label = { Text("Senha") },
-                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
-                        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                        trailingIcon = {
-                            IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (passwordVisible) R.drawable.ic_visibility_off else R.drawable.ic_visibility
-                                    ),
-                                    contentDescription = if (passwordVisible) "Ocultar senha" else "Mostrar senha"
-                                )
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    // Botão "Esqueci Minha Senha"
-                    TextButton(
-                        onClick = onForgotPassword,
-                        modifier = Modifier.align(Alignment.End)
-                    ) {
-                        Text(
-                            text = "Esqueci minha senha",
-                            style = TextStyle(
-                                color = MaterialTheme.colorScheme.primary,
-                                fontSize = 14.sp
-                            )
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    // Botão de Login
-                    Button(
-                        onClick = { onLogin(email, password) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                    ) {
-                        Text(
-                            "Login",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                fontWeight = MaterialTheme.typography.bodyMedium.fontWeight
-                            )
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Texto e botão de SignUp
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "Não possui uma conta?",
-                            style = TextStyle(fontSize = 14.sp, color = Color.Gray)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        ClickableText(
-                            text = buildAnnotatedString { append("Cadastre-se") },
-                            style = TextStyle(
-                                color = MaterialTheme.colorScheme.primary,
-                                fontSize = 14.sp,
-                                textAlign = TextAlign.Center
-                            ),
-                            onClick = { onSignUp() }
-                        )
-                    }
                 }
             }
         }
