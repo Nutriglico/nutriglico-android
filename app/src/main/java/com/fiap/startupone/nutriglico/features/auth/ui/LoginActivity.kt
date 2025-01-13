@@ -1,6 +1,8 @@
 package com.fiap.startupone.nutriglico.features.auth.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -43,16 +45,28 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fiap.startupone.nutriglico.R
+import com.fiap.startupone.nutriglico.features.home.ui.HomeActivity
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
 
 class LoginActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NutriGlicoTheme {
                 LoginScreen(
                     onLogin = { email, password ->
-                        // Implementação do login
+                        if (validateCredentials(email, password)) {
+                            val intent = Intent(this, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Email ou senha inválidos",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     },
                     onForgotPassword = {
                         // Navegar para a tela de "Esqueci Minha Senha"
@@ -63,6 +77,11 @@ class LoginActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    private fun validateCredentials(email: String, password: String): Boolean {
+        // Lógica simples de validação (exemplo)
+        return email.isNotEmpty() && password.isNotEmpty() && email.contains("@")
     }
 }
 
