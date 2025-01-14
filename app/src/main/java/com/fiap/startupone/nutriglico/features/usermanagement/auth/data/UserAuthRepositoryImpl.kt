@@ -1,9 +1,9 @@
 package com.fiap.startupone.nutriglico.features.usermanagement.auth.data
 
 import com.fiap.startupone.nutriglico.commons.model.User
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.repository.AuthRepository
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.repository.UserAuthRepository
 
-class AuthRepositoryImpl : AuthRepository {
+class UserAuthRepositoryImpl : UserAuthRepository {
 
     override suspend fun authenticate(email: String, password: String): Result<User> {
         // Simulação de lógica de login (API ou banco de dados)

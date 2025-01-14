@@ -5,20 +5,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.fiap.startupone.nutriglico.features.MainActivity
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.viewmodel.AuthViewModel
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.viewmodel.UserAuthViewModel
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.SignupActivity
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
 import org.koin.androidx.compose.koinViewModel
 
-class AuthActivity : ComponentActivity() {
+class UserAuthActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NutriGlicoTheme {
-                val viewModel: AuthViewModel = koinViewModel()
-                AuthScreen(
+                val viewModel: UserAuthViewModel = koinViewModel()
+                UserAuthScreen(
                     viewModel = viewModel,
-                    onAuthSuccess = { navigateToHome() },
+                    onUserAuthSuccess = { navigateToHome() },
                     onSignupClick = { navigateToSignup() },
                     onForgotPasswordClick = { /* Implementação futura */ }
                 )

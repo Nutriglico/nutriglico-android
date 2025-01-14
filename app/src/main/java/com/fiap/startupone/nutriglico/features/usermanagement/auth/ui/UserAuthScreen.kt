@@ -28,13 +28,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.fiap.startupone.nutriglico.R
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.viewmodel.AuthUiState
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.viewmodel.AuthViewModel
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.viewmodel.UserAuthUiState
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.viewmodel.UserAuthViewModel
 
 @Composable
-fun AuthScreen(
-    viewModel: AuthViewModel,
-    onAuthSuccess: () -> Unit,
+fun UserAuthScreen(
+    viewModel: UserAuthViewModel,
+    onUserAuthSuccess: () -> Unit,
     onSignupClick: () -> Unit,
     onForgotPasswordClick: () -> Unit
 ) {
@@ -111,10 +111,10 @@ fun AuthScreen(
 
                 // Gerenciamento de Estados
                 when (uiState) {
-                    is AuthUiState.Loading -> CircularProgressIndicator()
-                    is AuthUiState.Success -> onAuthSuccess()
-                    is AuthUiState.Error -> Text(
-                        (uiState as AuthUiState.Error).errorMessage,
+                    is UserAuthUiState.Loading -> CircularProgressIndicator()
+                    is UserAuthUiState.Success -> onUserAuthSuccess()
+                    is UserAuthUiState.Error -> Text(
+                        (uiState as UserAuthUiState.Error).errorMessage,
                         color = MaterialTheme.colorScheme.error
                     )
 

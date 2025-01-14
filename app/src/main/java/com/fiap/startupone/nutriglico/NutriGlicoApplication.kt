@@ -1,7 +1,7 @@
 package com.fiap.startupone.nutriglico
 
 import android.app.Application
-import com.fiap.startupone.nutriglico.commons.di.authModule
+import com.fiap.startupone.nutriglico.commons.di.userAuthModule
 import com.fiap.startupone.nutriglico.commons.di.glicemicControlModule
 import com.fiap.startupone.nutriglico.commons.di.homeModule
 import com.fiap.startupone.nutriglico.commons.di.networkModule
@@ -16,7 +16,7 @@ class NutriGlicoApplication : Application() {
 
         val appModules = listOf(
             networkModule,
-            authModule,
+            userAuthModule,
             homeModule,
             signupModule,
             glicemicControlModule
