@@ -4,7 +4,7 @@ import com.fiap.startupone.nutriglico.commons.model.User
 
 interface AuthRepository {
 
-    suspend fun login(email: String, password: String): Result<User>
+    suspend fun authenticate(email: String, password: String): Result<User>
 
 }
 

@@ -8,6 +8,6 @@ class AuthUseCase(private val repository: AuthRepository) {
         if (email.isBlank() || password.isBlank()) {
             return Result.failure(Exception("Email e senha são obrigatórios"))
         }
-        return repository.login(email, password)
+        return repository.authenticate(email, password)
     }
 }

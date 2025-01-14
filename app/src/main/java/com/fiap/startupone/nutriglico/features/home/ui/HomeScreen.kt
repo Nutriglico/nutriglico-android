@@ -17,9 +17,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fiap.startupone.nutriglico.R
-import com.fiap.startupone.nutriglico.commons.ui.BottomNavigationBar
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 import com.fiap.startupone.nutriglico.commons.ui.SectionTitle
 import com.fiap.startupone.nutriglico.commons.ui.StandardCard
@@ -33,7 +33,6 @@ fun HomeScreen(viewModel: HomeViewModel) {
 
     Scaffold(
         topBar = { CustomTopBar(title = "NutriGlico", onBack = null) },
-        bottomBar = { BottomNavigationBar() },
         content = { padding ->
             HomeContent(
                 modifier = Modifier
@@ -128,4 +127,13 @@ fun HomeContent(
             onClick = { onCardClick(HomeAction.OpenMedication) }
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    val mockViewModel = HomeViewModel()
+    HomeScreen(
+        viewModel = mockViewModel
+    )
 }

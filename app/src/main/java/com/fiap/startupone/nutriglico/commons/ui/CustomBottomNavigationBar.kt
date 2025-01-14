@@ -1,29 +1,25 @@
 package com.fiap.startupone.nutriglico.commons.ui
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavController
 import com.fiap.startupone.nutriglico.R
 
 @Composable
-fun BottomNavigationBar() {
-    NavigationBar(
-        containerColor = Color(0xFFF8F8F8) // Cor gelo
-    ) {
+fun BottomNavigationBar(navController: NavController) {
+    NavigationBar {
         NavigationBarItem(
-            icon = {
-                Icon(
-                    painterResource(id = R.drawable.ic_food),
-                    contentDescription = "Refeição"
-                )
-            },
-            label = { Text("Refeição") },
+            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+            label = { Text("Home") },
             selected = false,
-            onClick = { /* Navigate */ }
+            onClick = { navController.navigate("home") }
         )
         NavigationBarItem(
             icon = {
@@ -33,14 +29,31 @@ fun BottomNavigationBar() {
                 )
             },
             label = { Text("Glicemia") },
-            selected = true,
-            onClick = { /* Navigate */ }
+            selected = false,
+            onClick = { navController.navigate("glicemia") }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Add, contentDescription = "Inserir") },
+            label = { Text("Inserir") },
+            selected = false,
+            onClick = { navController.navigate("inserir") }
+        )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    painterResource(id = R.drawable.ic_food),
+                    contentDescription = "Refeição"
+                )
+            },
+            label = { Text("Refeição") },
+            selected = false,
+            onClick = { navController.navigate("refeicao") }
         )
         NavigationBarItem(
             icon = { Icon(painterResource(id = R.drawable.ic_menu), contentDescription = "Menu") },
             label = { Text("Menu") },
             selected = false,
-            onClick = { /* Navigate */ }
+            onClick = { navController.navigate("menu") }
         )
     }
 }

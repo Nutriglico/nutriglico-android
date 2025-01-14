@@ -7,7 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class AuthViewModel(private val authUseCase: AuthUseCase) : ViewModel() {
+class AuthViewModel(
+    private val authUseCase: AuthUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
     val uiState: StateFlow<AuthUiState> get() = _uiState
@@ -15,19 +17,23 @@ class AuthViewModel(private val authUseCase: AuthUseCase) : ViewModel() {
     fun authenticate(email: String, password: String) {
         viewModelScope.launch {
             _uiState.value = AuthUiState.Loading
-            val result = authUseCase.execute(email, password)
-            _uiState.value = if (result.isSuccess) {
-                AuthUiState.Success
-            } else {
-                AuthUiState.Error(result.exceptionOrNull()?.message ?: "Erro desconhecido")
+            try {
+                val result = authUseCase.execute(email, password)
+                if (result.isSuccess) {
+                    _uiState.value = AuthUiState.Success
+                } else {
+                    _uiState.value = AuthUiState.Error("Authentication failed")
+                }
+            } catch (e: Exception) {
+                _uiState.value = AuthUiState.Error(e.message ?: "Unknown error")
             }
         }
     }
 }
 
 sealed class AuthUiState {
-    data object Idle : AuthUiState()
-    data object Loading : AuthUiState()
-    data object Success : AuthUiState()
+    object Idle : AuthUiState()
+    object Loading : AuthUiState()
+    object Success : AuthUiState()
     data class Error(val errorMessage: String) : AuthUiState()
 }

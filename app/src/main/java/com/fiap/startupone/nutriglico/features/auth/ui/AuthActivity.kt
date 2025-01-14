@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.fiap.startupone.nutriglico.features.MainActivity
 import com.fiap.startupone.nutriglico.features.auth.viewmodel.AuthViewModel
-import com.fiap.startupone.nutriglico.features.home.ui.HomeActivity
 import com.fiap.startupone.nutriglico.features.signup.ui.SignupActivity
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
 import org.koin.androidx.compose.koinViewModel
@@ -27,15 +27,12 @@ class AuthActivity : ComponentActivity() {
     }
 
     private fun navigateToHome() {
-        // Implementação para navegar para a tela Home
-        // Exemplo:
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 
     private fun navigateToSignup() {
-        // Implementação para navegar para a tela de Cadastro
-        // Exemplo:
         startActivity(Intent(this, SignupActivity::class.java))
     }
+
 }

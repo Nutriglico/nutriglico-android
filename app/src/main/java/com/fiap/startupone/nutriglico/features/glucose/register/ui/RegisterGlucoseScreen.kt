@@ -27,6 +27,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.fiap.startupone.nutriglico.R
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 import com.fiap.startupone.nutriglico.commons.ui.showDatePickerDialog
@@ -37,10 +39,9 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun RegisterGlucoseScreen(viewModel: RegisterGlucoseViewModel, onBack: () -> Unit) {
-    val successMessage by viewModel.successMessage.collectAsState()
-
+fun RegisterGlucoseScreen(viewModel: RegisterGlucoseViewModel, navController: NavController) {
     val context = LocalContext.current
+    val successMessage by viewModel.successMessage.collectAsState()
 
     // Estados iniciais para data e hora
     var date by remember { mutableStateOf(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))) }
@@ -49,7 +50,7 @@ fun RegisterGlucoseScreen(viewModel: RegisterGlucoseViewModel, onBack: () -> Uni
     // Scaffold para a tela
     Scaffold(
         topBar = {
-            CustomTopBar(title = "NutriGlico", onBack = { onBack() })
+            CustomTopBar(title = "NutriGlico", navController = navController)
         },
         content = { padding ->
             Column(
