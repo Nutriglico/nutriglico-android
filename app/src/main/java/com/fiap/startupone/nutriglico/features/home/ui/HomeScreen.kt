@@ -23,7 +23,7 @@ import com.fiap.startupone.nutriglico.R
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 import com.fiap.startupone.nutriglico.commons.ui.SectionTitle
 import com.fiap.startupone.nutriglico.commons.ui.StandardCard
-import com.fiap.startupone.nutriglico.features.glucose.register.ui.RegisterGlucoseActivity
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.ui.RegisterGlicemicControlActivity
 import com.fiap.startupone.nutriglico.features.home.viewmodel.HomeAction
 import com.fiap.startupone.nutriglico.features.home.viewmodel.HomeViewModel
 
@@ -45,9 +45,9 @@ fun HomeScreen(viewModel: HomeViewModel) {
     )
 
     when (homeState.action) {
-        HomeAction.OpenRegisterGlucose -> {
+        HomeAction.OpenRegisterGlicemicControl -> {
             val context = LocalContext.current
-            context.startActivity(Intent(context, RegisterGlucoseActivity::class.java))
+            context.startActivity(Intent(context, RegisterGlicemicControlActivity::class.java))
             viewModel.resetAction()
         }
         else -> {}
@@ -70,11 +70,11 @@ fun HomeContent(
         // 1. Minhas Medições
         SectionTitle(title = "Minhas Medições")
         StandardCard(
-            icon = R.drawable.ic_glucose,
+            icon = R.drawable.ic_glicemic_control,
             title = "Glicemia",
             description = "120 mg/dL",
             rightIcon = R.drawable.ic_add,
-            onClick = { onCardClick(HomeAction.OpenRegisterGlucose) }
+            onClick = { onCardClick(HomeAction.OpenRegisterGlicemicControl) }
         )
         StandardCard(
             icon = R.drawable.ic_monitor_weight,

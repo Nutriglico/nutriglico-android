@@ -34,14 +34,14 @@ fun BottomNavigationBar(navController: NavController) {
         NavigationBarItem(
             icon = {
                 Icon(
-                    painterResource(id = R.drawable.ic_glucose),
+                    painterResource(id = R.drawable.ic_glicemic_control),
                     contentDescription = "Glicemia"
                 )
             },
             label = { Text("Glicemia") },
-            selected = currentRoute(navController) == "glicemia",
+            selected = currentRoute(navController) == "glicemic",
             onClick = {
-                navController.navigate("glicemia") {
+                navController.navigate("glicemic") {
                     popUpTo(navController.graph.startDestinationId) {
                         saveState = true
                     }

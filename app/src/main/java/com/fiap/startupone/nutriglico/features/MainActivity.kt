@@ -20,8 +20,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fiap.startupone.nutriglico.commons.ui.BottomNavigationBar
 import com.fiap.startupone.nutriglico.commons.ui.ExitAppDialog
-import com.fiap.startupone.nutriglico.features.glucose.register.ui.RegisterGlucoseScreen
-import com.fiap.startupone.nutriglico.features.glucose.register.viewmodel.RegisterGlucoseViewModel
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.ui.RegisterGlicemicControlScreen
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.viewmodel.RegisterGlicemicControlViewModel
 import com.fiap.startupone.nutriglico.features.home.ui.HomeScreen
 import com.fiap.startupone.nutriglico.features.home.viewmodel.HomeViewModel
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
@@ -57,7 +57,7 @@ fun MainScreen(context: MainActivity) {
             composable("home") {
                 executeHomeScreen()
             }
-            composable("glicemia") { executeGlucoseScreen(navController) }
+            composable("glicemic") { executeRegisterGlicemicControlScreen(navController) }
             composable("inserir") { executeMeasurementsScreen() }
             composable("refeicao") { executeMealsScreen() }
             composable("menu") { executeMenuScreen() }
@@ -88,9 +88,9 @@ private fun executeHomeScreen() {
 }
 
 @Composable
-fun executeGlucoseScreen(navController: NavController) {
-    val viewModel: RegisterGlucoseViewModel = koinViewModel()
-    RegisterGlucoseScreen(
+fun executeRegisterGlicemicControlScreen(navController: NavController) {
+    val viewModel: RegisterGlicemicControlViewModel = koinViewModel()
+    RegisterGlicemicControlScreen(
         viewModel = viewModel,
         navController = navController
     )

@@ -23,7 +23,7 @@ data class HomeState(
 )
 
 sealed class HomeAction {
-    data object OpenRegisterGlucose : HomeAction()
+    data object OpenRegisterGlicemicControl : HomeAction()
     data object OpenHistory : HomeAction()
     data object OpenFood : HomeAction()
     data object OpenMedication : HomeAction()

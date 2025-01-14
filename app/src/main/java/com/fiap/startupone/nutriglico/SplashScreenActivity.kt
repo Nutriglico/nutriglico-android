@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.fiap.startupone.nutriglico.features.auth.ui.AuthActivity
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.ui.AuthActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : ComponentActivity() {
