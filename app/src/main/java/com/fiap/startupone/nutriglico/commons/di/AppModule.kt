@@ -6,6 +6,7 @@ import com.fiap.startupone.nutriglico.features.auth.repository.AuthRepository
 import com.fiap.startupone.nutriglico.features.auth.viewmodel.AuthViewModel
 import com.fiap.startupone.nutriglico.features.glucose.register.domain.usecase.SaveGlucoseMeasurementUseCase
 import com.fiap.startupone.nutriglico.features.glucose.register.viewmodel.RegisterGlucoseViewModel
+import com.fiap.startupone.nutriglico.features.home.viewmodel.HomeViewModel
 import com.fiap.startupone.nutriglico.features.signup.data.SignupRepositoryImpl
 import com.fiap.startupone.nutriglico.features.signup.domain.usecase.CreateUserUseCase
 import com.fiap.startupone.nutriglico.features.signup.repository.SignupRepository
@@ -15,6 +16,7 @@ import org.koin.dsl.module
 
 val appModules = listOf(
     authModule(),
+    homeModule(),
     signupModule(),
     glucoseModule()
 )
@@ -28,6 +30,11 @@ fun authModule() = module {
 
     // ViewModel para gerenciamento da tela de autenticação
     viewModel { AuthViewModel(get()) }
+}
+
+fun homeModule() = module {
+    // ViewModel para a tela Home
+    viewModel { HomeViewModel() }
 }
 
 fun signupModule() = module {
