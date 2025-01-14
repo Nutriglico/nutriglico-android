@@ -3,6 +3,8 @@ package com.fiap.startupone.nutriglico.features.home.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.fiap.startupone.nutriglico.features.home.viewmodel.HomeViewModel
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
 
 class HomeActivity : ComponentActivity() {
@@ -11,7 +13,8 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NutriGlicoTheme {
-                HomeScreen()
+                val viewModel: HomeViewModel = viewModel()
+                HomeScreen(viewModel = viewModel)
             }
         }
     }
