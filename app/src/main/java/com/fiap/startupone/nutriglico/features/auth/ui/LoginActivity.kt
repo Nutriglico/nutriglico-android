@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.fiap.startupone.nutriglico.features.home.ui.HomeActivity
+import com.fiap.startupone.nutriglico.features.signup.ui.SignupActivity
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
 
 class LoginActivity : ComponentActivity() {
@@ -32,7 +33,8 @@ class LoginActivity : ComponentActivity() {
                         // Navegar para a tela de "Esqueci Minha Senha"
                     },
                     onSignUp = {
-                        // Navegar para a tela de SignUp
+                        val intent = Intent(this, SignupActivity::class.java)
+                        startActivity(intent)
                     }
                 )
             }
