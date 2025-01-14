@@ -1,7 +1,6 @@
 package com.fiap.startupone.nutriglico.commons.di
 
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.service.RegisterGlicemicControlService
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.service.UserManagementService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,11 +24,11 @@ private fun createRetrofit(baseUrl: String): Retrofit {
 private fun provideGlicemicControlService(): RegisterGlicemicControlService =
     createRetrofit(BASE_URL_GLICEMIC_CONTROL).create(RegisterGlicemicControlService::class.java)
 
-private fun provideUserManagementService(): UserManagementService =
-    createRetrofit(BASE_URL_USER_MANAGEMENT).create(UserManagementService::class.java)
+//private fun provideUserManagementService(): UserManagementService =
+//    createRetrofit(BASE_URL_USER_MANAGEMENT).create(UserManagementService::class.java)
 
 // Koin module
 val networkModule = module {
     single { provideGlicemicControlService() }
-    single { provideUserManagementService() }
+    //single { provideUserManagementService() }
 }

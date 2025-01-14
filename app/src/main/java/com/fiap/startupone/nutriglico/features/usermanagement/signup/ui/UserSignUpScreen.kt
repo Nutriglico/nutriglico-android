@@ -8,11 +8,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.SignupViewModel
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.UserSignUpViewModel
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.SignupUiState
 
 @Composable
-fun SignupScreen(viewModel: SignupViewModel = viewModel(), onBack: () -> Unit) {
+fun UserSignUpScreen(viewModel: UserSignUpViewModel = viewModel(), onBack: () -> Unit) {
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(

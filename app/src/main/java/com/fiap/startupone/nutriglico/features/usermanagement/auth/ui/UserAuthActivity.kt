@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.fiap.startupone.nutriglico.features.MainActivity
 import com.fiap.startupone.nutriglico.features.usermanagement.auth.viewmodel.UserAuthViewModel
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.SignupActivity
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.UserSignUpActivity
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -32,7 +32,7 @@ class UserAuthActivity : ComponentActivity() {
     }
 
     private fun navigateToSignup() {
-        startActivity(Intent(this, SignupActivity::class.java))
+        startActivity(Intent(this, UserSignUpActivity::class.java))
     }
 
 }

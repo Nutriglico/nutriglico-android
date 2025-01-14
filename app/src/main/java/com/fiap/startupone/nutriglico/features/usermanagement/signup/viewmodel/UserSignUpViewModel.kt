@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class SignupViewModel(private val createUserUseCase: CreateUserUseCase) : ViewModel() {
+class UserSignUpViewModel(private val createUserUseCase: CreateUserUseCase) : ViewModel() {
 
     private val _uiState = MutableStateFlow<SignupUiState>(SignupUiState.Idle)
     val uiState: StateFlow<SignupUiState> get() = _uiState

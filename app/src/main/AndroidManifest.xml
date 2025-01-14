@@ -17,7 +17,7 @@
             android:name=".features.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".features.usermanagement.signup.ui.SignupActivity"
+            android:name=".features.usermanagement.signup.ui.UserSignUpActivity"
             android:exported="false" />
         <activity
             android:name=".features.glicemiccontrol.register.ui.RegisterGlicemicControlActivity"
