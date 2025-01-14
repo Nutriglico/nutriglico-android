@@ -17,13 +17,13 @@
             android:name=".features.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".features.signup.ui.SignupActivity"
+            android:name=".features.usermanagement.signup.ui.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".features.glucose.register.ui.RegisterGlucoseActivity"
+            android:name=".features.glicemiccontrol.register.ui.RegisterGlicemicControlActivity"
             android:exported="false" />
         <activity
-            android:name=".features.auth.ui.AuthActivity"
+            android:name=".features.usermanagement.auth.ui.AuthActivity"
             android:exported="false" />
         <activity
             android:name=".SplashScreenActivity"
