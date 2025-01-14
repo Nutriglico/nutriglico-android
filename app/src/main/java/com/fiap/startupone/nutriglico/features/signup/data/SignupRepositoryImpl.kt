@@ -1,6 +1,7 @@
-package com.fiap.startupone.nutriglico.features.signup.repository
+package com.fiap.startupone.nutriglico.features.signup.data
 
-import com.fiap.startupone.nutriglico.features.signup.domain.usecase.User
+import com.fiap.startupone.nutriglico.commons.model.User
+import com.fiap.startupone.nutriglico.features.signup.repository.SignupRepository
 
 class SignupRepositoryImpl : SignupRepository {
     override suspend fun createUser(user: User): Result<Boolean> {

@@ -23,7 +23,7 @@
             android:name=".features.home.ui.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".features.auth.ui.LoginActivity"
+            android:name=".features.auth.ui.AuthActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

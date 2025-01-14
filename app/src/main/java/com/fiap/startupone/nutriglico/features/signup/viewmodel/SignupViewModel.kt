@@ -2,8 +2,8 @@ package com.fiap.startupone.nutriglico.features.signup.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fiap.startupone.nutriglico.commons.model.User
 import com.fiap.startupone.nutriglico.features.signup.domain.usecase.CreateUserUseCase
-import com.fiap.startupone.nutriglico.features.signup.domain.usecase.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

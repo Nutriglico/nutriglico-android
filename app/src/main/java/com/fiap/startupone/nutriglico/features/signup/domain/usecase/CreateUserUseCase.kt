@@ -1,16 +1,11 @@
 package com.fiap.startupone.nutriglico.features.signup.domain.usecase
 
+import com.fiap.startupone.nutriglico.commons.model.User
 import com.fiap.startupone.nutriglico.features.signup.repository.SignupRepository
-
-data class User(
-    val name: String,
-    val email: String,
-    val password: String
-)
 
 class CreateUserUseCase(private val repository: SignupRepository) {
     suspend fun execute(user: User): Result<Boolean> {
-        if (user.name.isBlank() || user.email.isBlank() || user.password.isBlank()) {
+        if (user.name.isBlank() || user.email.isBlank() || user.password.isNullOrBlank()) {
             return Result.failure(Exception("Todos os campos são obrigatórios"))
         }
 

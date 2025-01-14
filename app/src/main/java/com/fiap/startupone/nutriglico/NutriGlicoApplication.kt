@@ -1,7 +1,7 @@
 package com.fiap.startupone.nutriglico
 
 import android.app.Application
-import com.fiap.startupone.nutriglico.commons.di.appModule
+import com.fiap.startupone.nutriglico.commons.di.appModules
 import org.koin.core.context.startKoin
 
 class NutriGlicoApplication : Application() {
@@ -11,7 +11,7 @@ class NutriGlicoApplication : Application() {
 
         // Init koin
         startKoin {
-            modules(appModule)
+            modules(appModules)
         }
     }
 
