@@ -2,17 +2,24 @@ package com.fiap.startupone.nutriglico.features
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fiap.startupone.nutriglico.commons.ui.BottomNavigationBar
+import com.fiap.startupone.nutriglico.commons.ui.ExitAppDialog
 import com.fiap.startupone.nutriglico.features.glucose.register.ui.RegisterGlucoseScreen
 import com.fiap.startupone.nutriglico.features.glucose.register.viewmodel.RegisterGlucoseViewModel
 import com.fiap.startupone.nutriglico.features.home.ui.HomeScreen
@@ -25,15 +32,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NutriGlicoTheme {
-                MainScreen()
+                MainScreen(this)
             }
         }
     }
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(context: MainActivity) {
     val navController = rememberNavController()
+
+    configBackHandler(context)
+
     Scaffold(
         bottomBar = {
             BottomNavigationBar(navController)
@@ -52,6 +62,22 @@ fun MainScreen() {
             composable("refeicao") { executeMealsScreen() }
             composable("menu") { executeMenuScreen() }
         }
+    }
+}
+
+@Composable
+private fun configBackHandler(context: MainActivity) {
+    var showExitDialog by remember { mutableStateOf(false) }
+
+    BackHandler {
+        showExitDialog = true
+    }
+
+    if (showExitDialog) {
+        ExitAppDialog(
+            onConfirm = { context.finish() },
+            onDismiss = { showExitDialog = false }
+        )
     }
 }
 
@@ -89,6 +115,7 @@ fun executeMenuScreen() {
 @Composable
 fun DefaultPreview() {
     NutriGlicoTheme {
-        MainScreen()
+        val context = LocalContext.current as MainActivity
+        MainScreen(context)
     }
 }
