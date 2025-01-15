@@ -1,6 +1,5 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.register.ui
 
-// Adicione a importação necessária
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,8 +8,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -39,9 +40,7 @@ import androidx.navigation.compose.rememberNavController
 import com.fiap.startupone.nutriglico.R
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 import com.fiap.startupone.nutriglico.commons.ui.showDatePickerDialog
-import com.fiap.startupone.nutriglico.commons.ui.showTimePickerDialog
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.RegisterGlicemicControlRepositoryImpl
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.GlicemicLevelDetails
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.GlicemicLevelResponse
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.RegisterGlicemicLevelRequest
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.service.RegisterGlicemicControlService
@@ -49,7 +48,6 @@ import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.domain.u
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.viewmodel.RegisterGlicemicControlViewModel
 import retrofit2.Response
 import java.time.LocalDate
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -61,17 +59,15 @@ fun RegisterGlicemicControlScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     var date by remember { mutableStateOf(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))) }
-    var time by remember { mutableStateOf(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))) }
     var glucoseLevel by remember { mutableStateOf("") }
     var measurementType by remember { mutableStateOf("FAST") }
-    var registerDate by remember { mutableStateOf("") }
 
     var expanded by remember { mutableStateOf(false) }
     val options = listOf("Jejum", "Aleatório")
 
     Scaffold(
         topBar = {
-            CustomTopBar(title = "NutriGlico", navController = navController)
+            CustomTopBar(title = "Registro de Glicemia", navController = navController)
         },
         content = { padding ->
             Column(
@@ -87,13 +83,8 @@ fun RegisterGlicemicControlScreen(
                     value = date,
                     onValueChange = { },
                     label = { Text("Data") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            showDatePickerDialog(context) { selectedDate ->
-                                date = selectedDate
-                            }
-                        },
+                    placeholder = { Text("Selecione uma data (dd/mm/aaaa)") },
+                    modifier = Modifier.fillMaxWidth(),
                     trailingIcon = {
                         IconButton(onClick = {
                             showDatePickerDialog(context) { selectedDate ->
@@ -109,52 +100,14 @@ fun RegisterGlicemicControlScreen(
                     readOnly = true
                 )
 
-                // Campo de Horário
-                OutlinedTextField(
-                    value = time,
-                    onValueChange = { },
-                    label = { Text("Horário") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            showTimePickerDialog(context) { selectedTime ->
-                                time = selectedTime
-                            }
-                        },
-                    trailingIcon = {
-                        IconButton(onClick = {
-                            showTimePickerDialog(context) { selectedTime ->
-                                time = selectedTime
-                            }
-                        }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_more_time),
-                                contentDescription = "Selecionar Horário"
-                            )
-                        }
-                    },
-                    readOnly = true
-                )
-
-                // Campo de Valor da Glicemia
-                OutlinedTextField(
-                    value = glucoseLevel,
-                    onValueChange = { glucoseLevel = it },
-                    label = { Text("Valor da Glicemia (mg/dL)") },
-                    placeholder = { Text("Ex.: 120") },
-                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth()
-                )
-
                 // Campo Dropdown para Tipo de Medição
                 Box(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
                         value = if (measurementType == "FAST") "Jejum" else "Aleatório",
                         onValueChange = { },
                         label = { Text("Tipo de Medição") },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { expanded = true },
+                        placeholder = { Text("Escolha o tipo") },
+                        modifier = Modifier.fillMaxWidth(),
                         readOnly = true,
                         trailingIcon = {
                             IconButton(onClick = { expanded = true }) {
@@ -167,7 +120,8 @@ fun RegisterGlicemicControlScreen(
                     )
                     DropdownMenu(
                         expanded = expanded,
-                        onDismissRequest = { expanded = false }
+                        onDismissRequest = { expanded = false },
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         options.forEach { option ->
                             DropdownMenuItem(
@@ -181,13 +135,30 @@ fun RegisterGlicemicControlScreen(
                     }
                 }
 
+                // Campo de Valor da Glicemia
+                OutlinedTextField(
+                    value = glucoseLevel,
+                    onValueChange = { glucoseLevel = it },
+                    label = { Text("Valor da Glicemia (mg/dL)") },
+                    placeholder = { Text("Insira o valor em mg/dL") },
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+
                 // Botão de Salvar
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
                     onClick = {
-                        viewModel.saveMeasurement(glucoseLevel, date, time, measurementType)
+                        viewModel.saveMeasurement(glucoseLevel, date, measurementType)
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
                     Text("Salvar")
                 }
@@ -217,7 +188,6 @@ fun RegisterGlicemicControlScreen(
         }
     )
 }
-
 
 @Preview(showBackground = true)
 @Composable

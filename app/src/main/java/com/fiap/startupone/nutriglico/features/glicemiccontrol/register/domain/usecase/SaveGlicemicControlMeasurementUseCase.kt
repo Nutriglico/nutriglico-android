@@ -9,10 +9,9 @@ class SaveGlicemicControlMeasurementUseCase(
     suspend fun execute(
         glucoseLevel: String,
         date: String,
-        time: String,
         measurementType: String
     ): Result<Boolean> {
-        if (glucoseLevel.isEmpty() || date.isEmpty() || time.isEmpty() || measurementType.isEmpty()) {
+        if (glucoseLevel.isEmpty() || date.isEmpty() || measurementType.isEmpty()) {
             return Result.failure(Exception("Preencha todos os campos"))
         }
 
@@ -25,7 +24,7 @@ class SaveGlicemicControlMeasurementUseCase(
         val request = RegisterGlicemicLevelRequest(
             type = measurementType,
             level = level,
-            registerDate = "$date $time"
+            registerDate = date
         )
 
         return try {

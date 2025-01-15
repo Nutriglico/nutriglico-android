@@ -14,10 +14,10 @@ class RegisterGlicemicControlViewModel(
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState> get() = _uiState
 
-    fun saveMeasurement(glucoseLevel: String, date: String, time: String, measurementType: String) {
+    fun saveMeasurement(glucoseLevel: String, date: String, measurementType: String) {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
-            val result = saveMeasurementUseCase.execute(glucoseLevel, date, time, measurementType)
+            val result = saveMeasurementUseCase.execute(glucoseLevel, date, measurementType)
             _uiState.value = if (result.isSuccess) {
                 UiState.Success
             } else {
