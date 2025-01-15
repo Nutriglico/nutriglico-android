@@ -2,28 +2,34 @@ package com.fiap.startupone.nutriglico.features.glicemiccontrol.register.viewmod
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.domain.usecase.GlicemicControlMeasurement
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.domain.usecase.SaveGlicemicControlMeasurementUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class RegisterGlicemicControlViewModel(
-    private val saveGlicemicControlMeasurementUseCase: SaveGlicemicControlMeasurementUseCase
+    private val saveMeasurementUseCase: SaveGlicemicControlMeasurementUseCase
 ) : ViewModel() {
 
-    private val _successMessage = MutableStateFlow<String?>(null)
-    val successMessage: StateFlow<String?> get() = _successMessage
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
+    val uiState: StateFlow<UiState> get() = _uiState
 
-    fun saveMeasurement(date: String, time: String, value: Int, condition: String) {
+    fun saveMeasurement(glucoseLevel: String, date: String, time: String, measurementType: String) {
         viewModelScope.launch {
-            val measurement = GlicemicControlMeasurement(date, time, value, condition)
-            val isSuccess = saveGlicemicControlMeasurementUseCase.execute(measurement)
-            if (isSuccess) {
-                _successMessage.value = "Medição salva com sucesso!"
+            _uiState.value = UiState.Loading
+            val result = saveMeasurementUseCase.execute(glucoseLevel, date, time, measurementType)
+            _uiState.value = if (result.isSuccess) {
+                UiState.Success
             } else {
-                _successMessage.value = "Falha ao salvar a medição."
+                UiState.Error(result.exceptionOrNull()?.message ?: "Unknown error")
             }
         }
+    }
+
+    sealed class UiState {
+        object Idle : UiState()
+        object Loading : UiState()
+        object Success : UiState()
+        data class Error(val message: String) : UiState()
     }
 }

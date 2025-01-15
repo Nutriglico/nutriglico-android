@@ -9,6 +9,6 @@ import org.koin.dsl.module
 
 val glicemicControlModule = module {
     single<RegisterGlicemicControlRepository> { RegisterGlicemicControlRepositoryImpl(get()) }
-    single { SaveGlicemicControlMeasurementUseCase() }
+    single { SaveGlicemicControlMeasurementUseCase(get()) }
     viewModel { RegisterGlicemicControlViewModel(get()) }
 }

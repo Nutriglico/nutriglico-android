@@ -1,15 +1,48 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data
 
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.GlicemicLevelDetails
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.service.RegisterGlicemicControlService
+import android.util.Log
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.GlicemicLevelResponse
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.RegisterGlicemicLevelRequest
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.service.RegisterGlicemicControlService
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.repository.RegisterGlicemicControlRepository
+import retrofit2.HttpException
+import java.io.IOException
 
 class RegisterGlicemicControlRepositoryImpl(
     private val service: RegisterGlicemicControlService
 ) : RegisterGlicemicControlRepository {
-    override suspend fun registerGlicemicLevel(request: RegisterGlicemicLevelRequest) =
-        service.registerGlicemicLevel(request)
 
-    override suspend fun getGlicemicHistory(): List<GlicemicLevelDetails> = service.getGlicemicHistory()
+    override suspend fun registerGlicemicLevel(request: RegisterGlicemicLevelRequest): Result<Unit> {
+        return try {
+            val response = service.registerGlicemicLevel(request)
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(HttpException(response))
+            }
+        } catch (e: IOException) {
+            Log.e("API Error", "IOException: ${e.message}", e)
+            Result.failure(e)
+        } catch (e: HttpException) {
+            Log.e("API Error", "HttpException: ${e.message}", e)
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getGlicemicHistory(): Result<List<GlicemicLevelResponse>> {
+        return try {
+            val response = service.getGlicemicHistory()
+            if (response.isSuccessful) {
+                Result.success(response.body() ?: emptyList())
+            } else {
+                Result.failure(HttpException(response))
+            }
+        } catch (e: IOException) {
+            Log.e("API Error", "IOException: ${e.message}", e)
+            Result.failure(e)
+        } catch (e: HttpException) {
+            Log.e("API Error", "HttpException: ${e.message}", e)
+            Result.failure(e)
+        }
+    }
 }

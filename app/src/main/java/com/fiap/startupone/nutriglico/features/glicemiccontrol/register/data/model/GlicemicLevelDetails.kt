@@ -7,5 +7,5 @@ data class GlicemicLevelDetails(
     @SerializedName("value") val value: Int,
     @SerializedName("condition") val condition: String,
     @SerializedName("timestamp") val timestamp: String,
-    @SerializedName("notes") val notes: String?
+    @SerializedName("notes") val notes: String? = null
 )

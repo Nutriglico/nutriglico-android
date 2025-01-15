@@ -1,5 +1,6 @@
 package com.fiap.startupone.nutriglico.commons.di
 
+import com.fiap.startupone.nutriglico.commons.network.LoggingInterceptor
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.service.RegisterGlicemicControlService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -12,7 +13,9 @@ private const val BASE_URL_USER_MANAGEMENT = "https://api.usermanagement.com/"
 
 // Função genérica para criar Retrofit com uma base URL
 private fun createRetrofit(baseUrl: String): Retrofit {
-    val client = OkHttpClient.Builder().build()
+    val client = OkHttpClient.Builder()
+        .addInterceptor(LoggingInterceptor())
+        .build()
     return Retrofit.Builder()
         .baseUrl(baseUrl)
         .client(client)

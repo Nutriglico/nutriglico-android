@@ -1,7 +1,9 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class RegisterGlicemicLevelRequest(
-    val type: String = "RANDOM",
-    val level: Int,
-    val registerDate: String? = null
+    @SerializedName("type") val type: String,
+    @SerializedName("level") val level: Int,
+    @SerializedName("registerDate") val registerDate: String? = null
 )
