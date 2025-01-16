@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.features.usermanagement.auth
+package com.fiap.startupone.nutriglico.features.usermanagement
 
 import android.content.Intent
 import android.os.Bundle

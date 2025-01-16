@@ -16,7 +16,7 @@
         android:theme="@style/Theme.NutriGlico"
         tools:targetApi="31">
         <activity
-            android:name=".features.usermanagement.auth.AuthActivity"
+            android:name=".features.usermanagement.AuthActivity"
             android:exported="false" />
         <activity
             android:name=".features.MainActivity"
