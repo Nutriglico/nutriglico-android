@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.features.usermanagement.signup.ui
+package com.fiap.startupone.nutriglico.features.usermanagement.auth.presentation.signup
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -12,8 +12,18 @@ import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.U
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.SignupUiState
 
 @Composable
-fun UserSignUpScreen(viewModel: UserSignUpViewModel = viewModel(), onBack: () -> Unit) {
+fun UserSignUpScreen(
+    viewModel: UserSignUpViewModel,
+    onBack: () -> Unit,
+    onSignUpSuccess: () -> Unit
+) {
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(uiState) {
+        if (uiState is SignupUiState.Success) {
+            onSignUpSuccess()
+        }
+    }
 
     Scaffold(
         topBar = {

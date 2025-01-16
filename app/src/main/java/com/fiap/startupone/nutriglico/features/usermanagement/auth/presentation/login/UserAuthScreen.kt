@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.features.usermanagement.auth.ui
+package com.fiap.startupone.nutriglico.features.usermanagement.auth.presentation.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
