@@ -1,11 +1,11 @@
-package com.fiap.startupone.nutriglico.features.usermanagement.auth.navigation
+package com.fiap.startupone.nutriglico.features.usermanagement.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.presentation.login.UserAuthScreen
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.presentation.signup.UserSignUpScreen
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.ui.UserAuthScreen
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.UserSignUpScreen
 import com.fiap.startupone.nutriglico.features.usermanagement.auth.viewmodel.UserAuthViewModel
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.UserSignUpViewModel
 import org.koin.androidx.compose.koinViewModel

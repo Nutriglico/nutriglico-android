@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import com.fiap.startupone.nutriglico.features.MainActivity
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.navigation.AuthNavigation
+import com.fiap.startupone.nutriglico.features.usermanagement.navigation.AuthNavigation
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
 
 class AuthActivity : ComponentActivity() {

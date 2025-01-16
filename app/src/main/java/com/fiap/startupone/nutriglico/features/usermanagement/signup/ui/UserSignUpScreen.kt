@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.features.usermanagement.auth.presentation.signup
+package com.fiap.startupone.nutriglico.features.usermanagement.signup.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -6,7 +6,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.UserSignUpViewModel
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.SignupUiState
