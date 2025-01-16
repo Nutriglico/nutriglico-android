@@ -15,9 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.fiap.startupone.nutriglico.commons.ui.BottomNavigationBar
 import com.fiap.startupone.nutriglico.commons.ui.ExitAppDialog
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.ui.GlicemicHistoryScreen
@@ -61,7 +63,10 @@ fun MainScreen(context: MainActivity) {
             composable("home") { executeHomeScreen(navController) }
             composable("glicemic") { executeRegisterGlicemicControlScreen(navController) }
             composable("glicemicHistory") { executeGlicemicHistoryScreen(navController) }
-            composable("glicemicRecordDetail/{recordId}") { backStackEntry ->
+            composable(
+                route = "glicemicRecordDetail/{recordId}",
+                arguments = listOf(navArgument("recordId") { type = NavType.StringType })
+            ) { backStackEntry ->
                 val recordId = backStackEntry.arguments?.getString("recordId") ?: return@composable
                 executeGlicemicRecordDetailScreen(navController, recordId)
             }
@@ -122,8 +127,7 @@ fun executeGlicemicRecordDetailScreen(navController: NavController, recordId: St
         viewModel = viewModel,
         recordId = recordId,
         navController = navController,
-        onEdit = {},
-        onDelete = {}
+        onDelete = { id -> viewModel.deleteRecord(id) }
     )
 }
 

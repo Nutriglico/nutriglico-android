@@ -1,9 +1,12 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.history.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.model.GlicemicHistoryResponse
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.domain.usecase.*
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.domain.usecase.DeleteGlicemicRecordUseCase
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.domain.usecase.FetchGlicemicDetailsUseCase
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.domain.usecase.UpdateGlicemicRecordUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -11,11 +14,18 @@ import kotlinx.coroutines.launch
 class GlicemicRecordDetailViewModel(
     private val fetchGlicemicDetailsUseCase: FetchGlicemicDetailsUseCase,
     private val updateGlicemicRecordUseCase: UpdateGlicemicRecordUseCase,
-    private val deleteGlicemicRecordUseCase: DeleteGlicemicRecordUseCase
+    private val deleteGlicemicRecordUseCase: DeleteGlicemicRecordUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    private val recordId: String = savedStateHandle["recordId"] ?: ""
 
     private val _recordState = MutableStateFlow<RecordState>(RecordState.Idle)
     val recordState: StateFlow<RecordState> get() = _recordState
+
+    init {
+        loadRecord(recordId)
+    }
 
     fun loadRecord(id: String) {
         _recordState.value = RecordState.Loading

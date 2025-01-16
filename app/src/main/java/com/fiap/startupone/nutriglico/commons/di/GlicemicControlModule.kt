@@ -34,7 +34,8 @@ val glicemicControlModule = module {
         GlicemicRecordDetailViewModel(
             fetchGlicemicDetailsUseCase = get(),
             updateGlicemicRecordUseCase = get(),
-            deleteGlicemicRecordUseCase = get()
+            deleteGlicemicRecordUseCase = get(),
+            savedStateHandle = get()
         )
     }
 }

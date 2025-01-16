@@ -8,5 +8,5 @@ data class GlicemicHistoryResponse(
     @SerializedName("registerDate") val registerDate: String,
     @SerializedName("type") val type: String,
     @SerializedName("rate") val rate: String,
-    @SerializedName("colorRate") val colorRate: String
+    @SerializedName("colorRate") val colorRate: String? = null
 )
