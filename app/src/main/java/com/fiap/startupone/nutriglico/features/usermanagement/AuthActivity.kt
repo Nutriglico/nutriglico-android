@@ -18,12 +18,14 @@ class AuthActivity : ComponentActivity() {
 
                 AuthNavigation(
                     navController = navController,
-                    onAuthSuccess = {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                    }
+                    onAuthSuccess = { navigateToMain() }
                 )
             }
         }
+    }
+
+    private fun navigateToMain() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }
