@@ -18,12 +18,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +38,9 @@ import androidx.navigation.NavController
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.model.GlicemicHistoryResponse
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.viewmodel.GlicemicRecordDetailViewModel
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.LaunchedEffect
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun GlicemicRecordDetailScreen(
@@ -42,14 +49,32 @@ fun GlicemicRecordDetailScreen(
     navController: NavController
 ) {
     val recordState by viewModel.recordState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        viewModel.navigationEvent.collect { event ->
+            when (event) {
+                is GlicemicRecordDetailViewModel.NavigationEvent.NavigateBackWithMessage -> {
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(event.message)
+                        navController.popBackStack()
+                    }
+                }
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
             CustomTopBar(title = "Editar Registro", navController = navController)
         },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         content = { padding ->
             when (recordState) {
-                is GlicemicRecordDetailViewModel.RecordState.Loading -> {
+                is GlicemicRecordDetailViewModel.RecordState.Loading,
+                is GlicemicRecordDetailViewModel.RecordState.Updated,
+                is GlicemicRecordDetailViewModel.RecordState.Deleted -> {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -122,7 +147,9 @@ fun GlicemicRecordDetailScreen(
                             }
                             Spacer(modifier = Modifier.width(16.dp))
                             OutlinedButton(
-                                onClick = { viewModel.deleteRecord(recordId) },
+                                onClick = {
+                                    viewModel.deleteRecord(recordId)
+                                },
                                 modifier = Modifier.weight(1f),
                                 colors = ButtonDefaults.outlinedButtonColors(
                                     contentColor = MaterialTheme.colorScheme.error

@@ -7,8 +7,10 @@ import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.mode
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.domain.usecase.DeleteGlicemicRecordUseCase
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.domain.usecase.FetchGlicemicDetailsUseCase
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.domain.usecase.UpdateGlicemicRecordUseCase
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class GlicemicRecordDetailViewModel(
@@ -22,6 +24,9 @@ class GlicemicRecordDetailViewModel(
 
     private val _recordState = MutableStateFlow<RecordState>(RecordState.Idle)
     val recordState: StateFlow<RecordState> get() = _recordState
+
+    private val _navigationEvent = MutableSharedFlow<NavigationEvent>()
+    val navigationEvent = _navigationEvent.asSharedFlow()
 
     init {
         loadRecord(recordId)
@@ -44,7 +49,8 @@ class GlicemicRecordDetailViewModel(
         viewModelScope.launch {
             try {
                 updateGlicemicRecordUseCase(record)
-                _recordState.value = RecordState.Success(record)
+                _recordState.value = RecordState.Updated(record)
+                _navigationEvent.emit(NavigationEvent.NavigateBackWithMessage("Registro atualizado com sucesso"))
             } catch (e: Exception) {
                 _recordState.value = RecordState.Error(e.message ?: "Erro ao atualizar o registro")
             }
@@ -56,6 +62,7 @@ class GlicemicRecordDetailViewModel(
             try {
                 deleteGlicemicRecordUseCase(id)
                 _recordState.value = RecordState.Deleted
+                _navigationEvent.emit(NavigationEvent.NavigateBackWithMessage("Registro excluído com sucesso"))
             } catch (e: Exception) {
                 _recordState.value = RecordState.Error(e.message ?: "Erro ao excluir o registro")
             }
@@ -67,6 +74,11 @@ class GlicemicRecordDetailViewModel(
         object Loading : RecordState()
         data class Success(val record: GlicemicHistoryResponse) : RecordState()
         data class Error(val message: String) : RecordState()
+        data class Updated(val record: GlicemicHistoryResponse) : RecordState()
         object Deleted : RecordState()
+    }
+
+    sealed class NavigationEvent {
+        data class NavigateBackWithMessage(val message: String) : NavigationEvent()
     }
 }
