@@ -20,6 +20,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fiap.startupone.nutriglico.commons.ui.BottomNavigationBar
 import com.fiap.startupone.nutriglico.commons.ui.ExitAppDialog
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.ui.GlicemicHistoryScreen
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.ui.GlicemicRecordDetailScreen
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.viewmodel.GlicemicHistoryViewModel
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.viewmodel.GlicemicRecordDetailViewModel
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.ui.RegisterGlicemicControlScreen
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.viewmodel.RegisterGlicemicControlViewModel
 import com.fiap.startupone.nutriglico.features.home.ui.HomeScreen
@@ -54,10 +58,13 @@ fun MainScreen(context: MainActivity) {
             startDestination = "home",
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable("home") {
-                executeHomeScreen()
-            }
+            composable("home") { executeHomeScreen(navController) }
             composable("glicemic") { executeRegisterGlicemicControlScreen(navController) }
+            composable("glicemicHistory") { executeGlicemicHistoryScreen(navController) }
+            composable("glicemicRecordDetail/{recordId}") { backStackEntry ->
+                val recordId = backStackEntry.arguments?.getString("recordId") ?: return@composable
+                executeGlicemicRecordDetailScreen(navController, recordId)
+            }
             composable("inserir") { executeMeasurementsScreen() }
             composable("refeicao") { executeMealsScreen() }
             composable("menu") { executeMenuScreen() }
@@ -82,9 +89,9 @@ private fun configBackHandler(context: MainActivity) {
 }
 
 @Composable
-private fun executeHomeScreen() {
+private fun executeHomeScreen(navController: NavController) {
     val homeViewModel: HomeViewModel = koinViewModel()
-    HomeScreen(viewModel = homeViewModel)
+    HomeScreen(viewModel = homeViewModel, navController = navController)
 }
 
 @Composable
@@ -93,6 +100,30 @@ fun executeRegisterGlicemicControlScreen(navController: NavController) {
     RegisterGlicemicControlScreen(
         viewModel = viewModel,
         navController = navController
+    )
+}
+
+@Composable
+fun executeGlicemicHistoryScreen(navController: NavController) {
+    val viewModel: GlicemicHistoryViewModel = koinViewModel()
+    GlicemicHistoryScreen(
+        viewModel = viewModel,
+        navController = navController,
+        onItemClick = { recordId ->
+            navController.navigate("glicemicRecordDetail/$recordId")
+        }
+    )
+}
+
+@Composable
+fun executeGlicemicRecordDetailScreen(navController: NavController, recordId: String) {
+    val viewModel: GlicemicRecordDetailViewModel = koinViewModel()
+    GlicemicRecordDetailScreen(
+        viewModel = viewModel,
+        recordId = recordId,
+        navController = navController,
+        onEdit = {},
+        onDelete = {}
     )
 }
 

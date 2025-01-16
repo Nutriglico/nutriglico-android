@@ -59,6 +59,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.material3)
 
+    // MPAndroidChart Library
+    implementation(libs.mpandroidchart)
+
     // Dependency Injection Libraries
     implementation(libs.koin.core)
     implementation(libs.koin.android)

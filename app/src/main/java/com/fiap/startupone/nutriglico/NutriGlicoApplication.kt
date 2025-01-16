@@ -8,6 +8,7 @@ import com.fiap.startupone.nutriglico.commons.di.networkModule
 import com.fiap.startupone.nutriglico.commons.di.signupModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class NutriGlicoApplication : Application() {
 
@@ -26,6 +27,7 @@ class NutriGlicoApplication : Application() {
         startKoin {
             androidContext(this@NutriGlicoApplication)
             modules(appModules)
+            printLogger(level = Level.ERROR)
         }
     }
 

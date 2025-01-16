@@ -3,6 +3,7 @@ package com.fiap.startupone.nutriglico.commons.network
 import android.util.Log
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
+import com.google.gson.JsonSyntaxException
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -23,7 +24,7 @@ class LoggingInterceptor : Interceptor {
             "Method" to request.method,
             "URL" to request.url.toString(),
             "Headers" to request.headers.toString(),
-            "Body" to jsonParser.parse(requestBodyString).asJsonObject,
+            "Body" to requestBodyString,
             "Content-Length" to request.body?.contentLength().toString()
         )
         Log.d("API Request", gson.toJson(requestLog))
@@ -38,14 +39,26 @@ class LoggingInterceptor : Interceptor {
         // Log response details
         val responseBody = response.body
         val responseBodyString = responseBody?.string() ?: "null"
-        val responseLog = mapOf(
+        val responseLog = mutableMapOf(
             "Code" to response.code,
             "Message" to response.message,
             "Headers" to response.headers.toString(),
-            "Body" to jsonParser.parse(responseBodyString).asJsonObject,
             "Content-Length" to responseBody?.contentLength().toString(),
             "Response-Time" to "$responseTime ms"
         )
+
+        // Try to parse the response body as JSON
+        try {
+            val jsonElement = jsonParser.parse(responseBodyString)
+            responseLog["Body"] = if (jsonElement.isJsonObject) {
+                jsonElement.asJsonObject.toString()
+            } else {
+                responseBodyString
+            }
+        } catch (e: JsonSyntaxException) {
+            responseLog["Body"] = responseBodyString
+        }
+
         Log.d("API Response", gson.toJson(responseLog))
 
         // Create a new response with the logged body

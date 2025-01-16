@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fiap.startupone.nutriglico.R
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 import com.fiap.startupone.nutriglico.commons.ui.SectionTitle
@@ -28,7 +29,10 @@ import com.fiap.startupone.nutriglico.features.home.viewmodel.HomeAction
 import com.fiap.startupone.nutriglico.features.home.viewmodel.HomeViewModel
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(
+    viewModel: HomeViewModel,
+    navController: NavController
+) {
     val homeState by viewModel.homeState.collectAsState()
 
     Scaffold(
@@ -48,6 +52,10 @@ fun HomeScreen(viewModel: HomeViewModel) {
         HomeAction.OpenRegisterGlicemicControl -> {
             val context = LocalContext.current
             context.startActivity(Intent(context, RegisterGlicemicControlActivity::class.java))
+            viewModel.resetAction()
+        }
+        HomeAction.OpenHistory -> {
+            navController.navigate("glicemicHistory")
             viewModel.resetAction()
         }
         else -> {}
@@ -72,9 +80,9 @@ fun HomeContent(
         StandardCard(
             icon = R.drawable.ic_glicemic_control,
             title = "Glicemia",
-            description = "120 mg/dL",
-            rightIcon = R.drawable.ic_add,
-            onClick = { onCardClick(HomeAction.OpenRegisterGlicemicControl) }
+            description = "Histórico",
+            rightIcon = R.drawable.ic_chevron_right,
+            onClick = { onCardClick(HomeAction.OpenHistory) }
         )
         StandardCard(
             icon = R.drawable.ic_monitor_weight,
@@ -129,11 +137,11 @@ fun HomeContent(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    val mockViewModel = HomeViewModel()
-    HomeScreen(
-        viewModel = mockViewModel
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun HomeScreenPreview() {
+//    val mockViewModel = HomeViewModel()
+//    HomeScreen(
+//        viewModel = mockViewModel
+//    )
+//}
