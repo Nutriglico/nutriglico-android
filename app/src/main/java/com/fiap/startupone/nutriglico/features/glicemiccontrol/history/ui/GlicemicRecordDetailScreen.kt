@@ -39,26 +39,9 @@ import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.viewmodel
 fun GlicemicRecordDetailScreen(
     viewModel: GlicemicRecordDetailViewModel = viewModel(),
     recordId: String,
-    navController: NavController,
-    onDelete: (String) -> Unit
+    navController: NavController
 ) {
     val recordState by viewModel.recordState.collectAsState()
-
-//    // Estados locais para edição
-//    var type by remember { mutableStateOf("") }
-//    var level by remember { mutableStateOf("") }
-//    var registerDate by remember { mutableStateOf("") }
-//    var rate by remember { mutableStateOf("") }
-//
-//    LaunchedEffect(recordState) {
-//        if (recordState is GlicemicRecordDetailViewModel.RecordState.Success) {
-//            val record = (recordState as GlicemicRecordDetailViewModel.RecordState.Success).record
-//            type = record.type
-//            level = record.level.toString()
-//            registerDate = record.registerDate
-//            rate = record.rate
-//        }
-//    }
 
     Scaffold(
         topBar = {
@@ -139,7 +122,7 @@ fun GlicemicRecordDetailScreen(
                             }
                             Spacer(modifier = Modifier.width(16.dp))
                             OutlinedButton(
-                                onClick = { onDelete(recordId) },
+                                onClick = { viewModel.deleteRecord(recordId) },
                                 modifier = Modifier.weight(1f),
                                 colors = ButtonDefaults.outlinedButtonColors(
                                     contentColor = MaterialTheme.colorScheme.error

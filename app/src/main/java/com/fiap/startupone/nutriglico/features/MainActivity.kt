@@ -126,8 +126,7 @@ fun executeGlicemicRecordDetailScreen(navController: NavController, recordId: St
     GlicemicRecordDetailScreen(
         viewModel = viewModel,
         recordId = recordId,
-        navController = navController,
-        onDelete = { id -> viewModel.deleteRecord(id) }
+        navController = navController
     )
 }
 
