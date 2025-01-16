@@ -60,9 +60,15 @@ fun MainScreen(context: MainActivity) {
             startDestination = "home",
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable("home") { executeHomeScreen(navController) }
-            composable("glicemic") { executeRegisterGlicemicControlScreen(navController) }
-            composable("glicemicHistory") { executeGlicemicHistoryScreen(navController) }
+            composable(route = "home") {
+                executeHomeScreen(navController)
+            }
+            composable(route = "glicemic") {
+                executeRegisterGlicemicControlScreen(navController)
+            }
+            composable(route = "glicemicHistory") {
+                executeGlicemicHistoryScreen(navController)
+            }
             composable(
                 route = "glicemicRecordDetail/{recordId}",
                 arguments = listOf(navArgument("recordId") { type = NavType.StringType })
@@ -70,9 +76,12 @@ fun MainScreen(context: MainActivity) {
                 val recordId = backStackEntry.arguments?.getString("recordId") ?: return@composable
                 executeGlicemicRecordDetailScreen(navController, recordId)
             }
-            composable("inserir") { executeMeasurementsScreen() }
-            composable("refeicao") { executeMealsScreen() }
-            composable("menu") { executeMenuScreen() }
+            composable(route = "food") {
+                executeMealsScreen()
+            }
+            composable(route = "menu") {
+                executeMenuScreen()
+            }
         }
     }
 }
@@ -128,11 +137,6 @@ fun executeGlicemicRecordDetailScreen(navController: NavController, recordId: St
         recordId = recordId,
         navController = navController
     )
-}
-
-@Composable
-fun executeMeasurementsScreen() {
-    // Conteúdo da tela de registro de medições
 }
 
 @Composable

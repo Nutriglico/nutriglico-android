@@ -82,7 +82,7 @@ class GlicemicHistoryRepositoryImpl(
             service.deleteRecord(id)
         } catch (e: IOException) {
             Log.e("API Error", "IOException: ${e.message}", e)
-            //throw e
+            throw e
         } catch (e: HttpException) {
             Log.e("API Error", "HttpException: ${e.message}", e)
             throw e

@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.fiap.startupone.nutriglico.R
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 import com.fiap.startupone.nutriglico.commons.ui.SectionTitle
@@ -101,19 +102,7 @@ fun HomeContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 2. Meus Registros
-        SectionTitle(title = "Meus Registros")
-        StandardCard(
-            icon = R.drawable.ic_history,
-            title = "Histórico de Registros",
-            description = "1 registro",
-            rightIcon = R.drawable.ic_chevron_right,
-            onClick = { onCardClick(HomeAction.OpenHistory) }
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // 3. Minhas Refeições
+        // 2. Minhas Refeições
         SectionTitle(title = "Minhas Refeições")
         StandardCard(
             icon = R.drawable.ic_food,
@@ -125,7 +114,7 @@ fun HomeContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 4. Minhas Medicações
+        // 3. Minhas Medicações
         SectionTitle(title = "Minhas Medicações")
         StandardCard(
             icon = R.drawable.ic_pill,
@@ -137,11 +126,13 @@ fun HomeContent(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun HomeScreenPreview() {
-//    val mockViewModel = HomeViewModel()
-//    HomeScreen(
-//        viewModel = mockViewModel
-//    )
-//}
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    val mockViewModel = HomeViewModel()
+    val navController = rememberNavController()
+    HomeScreen(
+        viewModel = mockViewModel,
+        navController = navController
+    )
+}

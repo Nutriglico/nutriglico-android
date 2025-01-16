@@ -1,7 +1,6 @@
 package com.fiap.startupone.nutriglico.commons.ui
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -51,20 +50,6 @@ fun BottomNavigationBar(navController: NavController) {
             }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Add, contentDescription = "Inserir") },
-            label = { Text("Inserir") },
-            selected = currentRoute(navController) == "inserir",
-            onClick = {
-                navController.navigate("inserir") {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-            }
-        )
-        NavigationBarItem(
             icon = {
                 Icon(
                     painterResource(id = R.drawable.ic_food),
@@ -72,9 +57,9 @@ fun BottomNavigationBar(navController: NavController) {
                 )
             },
             label = { Text("Refeição") },
-            selected = currentRoute(navController) == "refeicao",
+            selected = currentRoute(navController) == "food",
             onClick = {
-                navController.navigate("refeicao") {
+                navController.navigate("food") {
                     popUpTo(navController.graph.startDestinationId) {
                         saveState = true
                     }
