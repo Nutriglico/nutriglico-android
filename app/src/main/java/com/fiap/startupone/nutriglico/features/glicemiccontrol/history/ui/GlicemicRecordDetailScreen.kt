@@ -1,15 +1,18 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.history.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -18,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -46,9 +50,19 @@ fun GlicemicRecordDetailScreen(
         },
         content = { padding ->
             when (recordState) {
+                is GlicemicRecordDetailViewModel.RecordState.Loading -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
                 is GlicemicRecordDetailViewModel.RecordState.Success -> {
                     val record = (recordState as GlicemicRecordDetailViewModel.RecordState.Success).record
-                    val statusColor = when (record.colorRate) { // Mapeia as cores
+                    val statusColor = when (record.colorRate) {
                         "GREEN" -> Color.Green
                         "YELLOW" -> Color.Yellow
                         "RED" -> Color.Red
@@ -90,8 +104,35 @@ fun GlicemicRecordDetailScreen(
                         }
                     }
                 }
-                // Resto do código permanece inalterado
-                else -> {}
+                is GlicemicRecordDetailViewModel.RecordState.Error -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                text = (recordState as GlicemicRecordDetailViewModel.RecordState.Error).message,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Button(onClick = { viewModel.loadRecord(recordId) }) {
+                                Text("Tentar Novamente")
+                            }
+                        }
+                    }
+                }
+                else -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("Carregando informações do registro...")
+                    }
+                }
             }
         }
     )
