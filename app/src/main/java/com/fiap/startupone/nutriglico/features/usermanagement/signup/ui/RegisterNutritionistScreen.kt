@@ -13,6 +13,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -21,12 +23,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.UserRequest
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.UserManagementUIState
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.UserManagementViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegisterNutritionistScreen(
     navController: NavHostController,
-    onRegisterSuccess: () -> Unit
+    onRegisterSuccess: () -> Unit,
+    viewModel: UserManagementViewModel = koinViewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     val name = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
@@ -86,14 +95,39 @@ fun RegisterNutritionistScreen(
 
                 Button(
                     onClick = {
-                        // Simulação de sucesso no cadastro
-                        onRegisterSuccess()
+                        viewModel.registerNutritionist(
+                            userRequest = UserRequest(
+                                name = name.value,
+                                email = email.value,
+                                password = password.value,
+                                licenseNumber = crn.value
+                            )
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 16.dp)
                 ) {
                     Text(text = "Cadastrar", fontSize = 18.sp)
+                }
+
+                when (uiState) {
+                    is UserManagementUIState.Loading -> Text("Carregando...", modifier = Modifier.padding(top = 16.dp))
+                    is UserManagementUIState.Success -> {
+                        Text("Cadastro realizado com sucesso!", modifier = Modifier.padding(top = 16.dp))
+                        onRegisterSuccess()
+                    }
+                    is UserManagementUIState.Error -> Text(
+                        text = (uiState as UserManagementUIState.Error).message,
+                        modifier = Modifier.padding(top = 16.dp),
+                        color = androidx.compose.ui.graphics.Color.Red
+                    )
+                    is UserManagementUIState.ValidationError -> Text(
+                        text = (uiState as UserManagementUIState.ValidationError).message,
+                        modifier = Modifier.padding(top = 16.dp),
+                        color = androidx.compose.ui.graphics.Color.Red
+                    )
+                    else -> {}
                 }
             }
         }

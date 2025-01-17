@@ -1,6 +1,5 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.register.ui
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,7 +33,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.fiap.startupone.nutriglico.R
@@ -46,13 +44,14 @@ import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.mod
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.service.RegisterGlicemicControlService
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.domain.usecase.SaveGlicemicControlMeasurementUseCase
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.viewmodel.RegisterGlicemicControlViewModel
+import org.koin.androidx.compose.koinViewModel
 import retrofit2.Response
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun RegisterGlicemicControlScreen(
-    viewModel: RegisterGlicemicControlViewModel = viewModel(),
+    viewModel: RegisterGlicemicControlViewModel = koinViewModel(),
     navController: NavController
 ) {
     val context = LocalContext.current

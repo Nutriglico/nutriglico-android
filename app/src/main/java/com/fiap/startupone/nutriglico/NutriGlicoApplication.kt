@@ -6,6 +6,7 @@ import com.fiap.startupone.nutriglico.commons.di.glicemicControlModule
 import com.fiap.startupone.nutriglico.commons.di.homeModule
 import com.fiap.startupone.nutriglico.commons.di.networkModule
 import com.fiap.startupone.nutriglico.commons.di.signupModule
+import com.fiap.startupone.nutriglico.commons.di.userManagementModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
@@ -18,8 +19,9 @@ class NutriGlicoApplication : Application() {
         val appModules = listOf(
             networkModule,
             userAuthModule,
-            homeModule,
+            userManagementModule,
             signupModule,
+            homeModule,
             glicemicControlModule
         )
 

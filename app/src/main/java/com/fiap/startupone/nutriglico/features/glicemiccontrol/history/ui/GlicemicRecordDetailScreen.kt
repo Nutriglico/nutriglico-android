@@ -33,16 +33,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.model.GlicemicHistoryResponse
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.viewmodel.GlicemicRecordDetailViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GlicemicRecordDetailScreen(
-    viewModel: GlicemicRecordDetailViewModel = viewModel(),
+    viewModel: GlicemicRecordDetailViewModel = koinViewModel(),
     recordId: String,
     navController: NavController
 ) {
