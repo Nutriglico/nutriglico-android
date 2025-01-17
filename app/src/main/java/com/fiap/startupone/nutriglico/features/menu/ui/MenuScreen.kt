@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 
@@ -38,6 +37,16 @@ fun MenuScreen(navController: NavController) {
                         .padding(vertical = 8.dp)
                 ) {
                     Text(text = "Início")
+                }
+
+                Button(
+                    // TODO: Buscar o ID do usuário logado no DB Local
+                    onClick = { navController.navigate("profile/1") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                ) {
+                    Text(text = "Perfil")
                 }
 
                 Button(

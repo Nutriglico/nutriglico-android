@@ -3,6 +3,7 @@ package com.fiap.startupone.nutriglico.commons.di
 import com.fiap.startupone.nutriglico.commons.network.LoggingInterceptor
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.service.GlicemicHistoryService
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.service.RegisterGlicemicControlService
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.service.ProfileService
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.service.UserManagementService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -35,9 +36,13 @@ private fun provideGlicemicHistoryService(): GlicemicHistoryService =
 private fun provideUserManagementService(): UserManagementService =
     createRetrofit(BASE_URL_USER_MANAGEMENT).create(UserManagementService::class.java)
 
+private fun provideProfileService(): ProfileService =
+    createRetrofit(BASE_URL_USER_MANAGEMENT).create(ProfileService::class.java)
+
 // Koin module
 val networkModule = module {
     single { provideGlicemicControlService() }
     single { provideGlicemicHistoryService() }
     single { provideUserManagementService() }
+    single { provideProfileService() }
 }

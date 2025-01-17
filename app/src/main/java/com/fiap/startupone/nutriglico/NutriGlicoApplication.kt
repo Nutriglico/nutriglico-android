@@ -5,6 +5,7 @@ import com.fiap.startupone.nutriglico.commons.di.userAuthModule
 import com.fiap.startupone.nutriglico.commons.di.glicemicControlModule
 import com.fiap.startupone.nutriglico.commons.di.homeModule
 import com.fiap.startupone.nutriglico.commons.di.networkModule
+import com.fiap.startupone.nutriglico.commons.di.profileModule
 import com.fiap.startupone.nutriglico.commons.di.signupModule
 import com.fiap.startupone.nutriglico.commons.di.userManagementModule
 import org.koin.android.ext.koin.androidContext
@@ -22,7 +23,8 @@ class NutriGlicoApplication : Application() {
             userManagementModule,
             signupModule,
             homeModule,
-            glicemicControlModule
+            glicemicControlModule,
+            profileModule
         )
 
         // Init koin

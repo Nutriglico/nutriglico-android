@@ -31,6 +31,10 @@ import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.viewmode
 import com.fiap.startupone.nutriglico.features.home.ui.HomeScreen
 import com.fiap.startupone.nutriglico.features.home.viewmodel.HomeViewModel
 import com.fiap.startupone.nutriglico.features.menu.ui.MenuScreen
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.screen.EditProfileScreen
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.screen.ProfileScreen
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmodel.EditProfileViewModel
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmodel.ProfileViewModel
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -83,7 +87,18 @@ fun MainScreen(context: MainActivity) {
             composable(route = "menu") {
                 executeMenuScreen(navController = navController)
             }
+            composable(
+                route = "profile/{userId}",
+                arguments = listOf(navArgument("userId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
+                executeProfileScreen(navController, userId)
+            }
+            composable(route = "editProfile") {
+                executeEditProfileScreen(navController)
+            }
         }
+
     }
 }
 
@@ -157,4 +172,15 @@ fun DefaultPreview() {
         val context = LocalContext.current as MainActivity
         MainScreen(context)
     }
+}
+
+@Composable
+fun executeProfileScreen(navController: NavController, userId: String) {
+    ProfileScreen(navController = navController, userId = userId)
+}
+
+@Composable
+fun executeEditProfileScreen(navController: NavController) {
+    val viewModel: EditProfileViewModel = koinViewModel()
+    EditProfileScreen(viewModel = viewModel, navController = navController)
 }
