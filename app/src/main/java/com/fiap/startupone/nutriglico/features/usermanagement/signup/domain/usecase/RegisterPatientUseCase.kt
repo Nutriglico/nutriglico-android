@@ -1,15 +1,15 @@
 package com.fiap.startupone.nutriglico.features.usermanagement.signup.domain.usecase
 
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.UserRequest
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.repository.UserManagementRepository
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.SignUpUserRequest
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.repository.UserManagementRepository
 
 class RegisterPatientUseCase(private val repository: UserManagementRepository) {
-    suspend operator fun invoke(userRequest: UserRequest): UserManagementResult<Unit> {
-        if (userRequest.name.isBlank() || userRequest.email.isBlank() || userRequest.password.isBlank()) {
+    suspend operator fun invoke(signUpUserRequest: SignUpUserRequest): UserManagementResult<Unit> {
+        if (signUpUserRequest.name.isBlank() || signUpUserRequest.email.isBlank() || signUpUserRequest.password.isBlank()) {
             return UserManagementResult.ValidationError
         }
         return try {
-            val result = repository.registerPatient(userRequest)
+            val result = repository.registerPatient(signUpUserRequest)
             result.fold(
                 onSuccess = { UserManagementResult.Success(Unit) },
                 onFailure = { UserManagementResult.Error(it as Exception) }

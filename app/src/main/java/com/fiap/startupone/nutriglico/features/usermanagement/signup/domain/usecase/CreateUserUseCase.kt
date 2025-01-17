@@ -1,7 +1,7 @@
 package com.fiap.startupone.nutriglico.features.usermanagement.signup.domain.usecase
 
 import com.fiap.startupone.nutriglico.commons.model.User
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.repository.UserSignUpRepository
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.repository.UserSignUpRepository
 
 class CreateUserUseCase(private val repository: UserSignUpRepository) {
     suspend fun execute(user: User): Result<Boolean> {

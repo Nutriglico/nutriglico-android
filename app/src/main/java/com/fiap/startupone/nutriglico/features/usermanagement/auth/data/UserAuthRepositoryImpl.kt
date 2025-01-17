@@ -1,7 +1,7 @@
 package com.fiap.startupone.nutriglico.features.usermanagement.auth.data
 
 import com.fiap.startupone.nutriglico.commons.model.User
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.repository.UserAuthRepository
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.data.repository.UserAuthRepository
 
 class UserAuthRepositoryImpl : UserAuthRepository {
 

@@ -4,13 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.ui.UserAuthScreen
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.viewmodel.UserAuthViewModel
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.RegisterNutritionistScreen
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.RegisterPatientScreen
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.SelectProfileScreen
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.UserSignUpScreen
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.viewmodel.UserSignUpViewModel
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.ui.screen.UserAuthScreen
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.ui.viewmodel.UserAuthViewModel
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.screen.RegisterNutritionistScreen
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.screen.RegisterPatientScreen
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.screen.SelectProfileScreen
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.screen.UserSignUpScreen
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.viewmodel.UserSignUpViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

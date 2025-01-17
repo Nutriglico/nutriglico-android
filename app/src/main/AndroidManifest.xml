@@ -22,7 +22,7 @@
             android:name=".features.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".features.glicemiccontrol.register.ui.RegisterGlicemicControlActivity"
+            android:name=".features.glicemiccontrol.register.ui.screen.RegisterGlicemicControlActivity"
             android:exported="false" />
         <activity
             android:name=".SplashScreenActivity"

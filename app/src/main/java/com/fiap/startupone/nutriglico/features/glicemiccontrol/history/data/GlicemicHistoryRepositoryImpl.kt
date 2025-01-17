@@ -3,7 +3,7 @@ package com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data
 import android.util.Log
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.model.GlicemicHistoryResponse
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.service.GlicemicHistoryService
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.repository.GlicemicHistoryRepository
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.repository.GlicemicHistoryRepository
 import retrofit2.HttpException
 import java.io.IOException
 

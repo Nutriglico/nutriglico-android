@@ -1,9 +1,9 @@
 package com.fiap.startupone.nutriglico.features.usermanagement.signup.data
 
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.UserRequest
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.UserResponse
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.SignUpUserRequest
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.SignUpUserResponse
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.service.UserManagementService
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.repository.UserManagementRepository
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.repository.UserManagementRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -13,23 +13,23 @@ class UserManagementRepositoryImpl(
     private val userManagementService: UserManagementService
 ) : UserManagementRepository {
 
-    override suspend fun registerPatient(userRequest: UserRequest): Result<Unit> = handleApiCall {
-        userManagementService.registerPatient(userRequest)
+    override suspend fun registerPatient(signUpUserRequest: SignUpUserRequest): Result<Unit> = handleApiCall {
+        userManagementService.registerPatient(signUpUserRequest)
     }
 
-    override suspend fun registerNutritionist(userRequest: UserRequest): Result<Unit> = handleApiCall {
-        userManagementService.registerNutritionist(userRequest)
+    override suspend fun registerNutritionist(signUpUserRequest: SignUpUserRequest): Result<Unit> = handleApiCall {
+        userManagementService.registerNutritionist(signUpUserRequest)
     }
 
-    override suspend fun updateUser(userId: String, updatedUserRequest: UserRequest): Result<Unit> = handleApiCall {
-        userManagementService.updateUser(userId, updatedUserRequest)
+    override suspend fun updateUser(userId: String, updatedSignUpUserRequest: SignUpUserRequest): Result<Unit> = handleApiCall {
+        userManagementService.updateUser(userId, updatedSignUpUserRequest)
     }
 
     override suspend fun deleteUser(userId: String): Result<Unit> = handleApiCall {
         userManagementService.deleteUser(userId)
     }
 
-    override suspend fun getUserDetails(userId: String): Result<UserResponse> = handleApiCall {
+    override suspend fun getUserDetails(userId: String): Result<SignUpUserResponse> = handleApiCall {
         userManagementService.getUserDetails(userId)
     }
 

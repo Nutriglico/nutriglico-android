@@ -4,7 +4,7 @@ import android.util.Log
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.GlicemicLevelResponse
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.RegisterGlicemicLevelRequest
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.service.RegisterGlicemicControlService
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.repository.RegisterGlicemicControlRepository
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.repository.RegisterGlicemicControlRepository
 import retrofit2.HttpException
 import java.io.IOException
 

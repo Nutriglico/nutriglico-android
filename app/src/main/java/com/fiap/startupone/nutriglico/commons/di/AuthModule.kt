@@ -2,8 +2,8 @@ package com.fiap.startupone.nutriglico.commons.di
 
 import com.fiap.startupone.nutriglico.features.usermanagement.auth.data.UserAuthRepositoryImpl
 import com.fiap.startupone.nutriglico.features.usermanagement.auth.domain.usecase.UserAuthUseCase
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.repository.UserAuthRepository
-import com.fiap.startupone.nutriglico.features.usermanagement.auth.viewmodel.UserAuthViewModel
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.data.repository.UserAuthRepository
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.ui.viewmodel.UserAuthViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
