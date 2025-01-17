@@ -43,7 +43,7 @@ fun GlicemicRecordList(
             modifier = Modifier.fillMaxSize()
         ) {
             items(history) { record ->
-                GlicemicRecordListItem(record = record, onClick = { onItemClick(record.id) })
+                GlicemicRecordCard(record = record, onClick = { onItemClick(record.id) })
             }
         }
     }
