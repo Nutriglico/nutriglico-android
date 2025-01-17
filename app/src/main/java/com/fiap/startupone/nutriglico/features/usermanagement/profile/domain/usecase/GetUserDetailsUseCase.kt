@@ -2,10 +2,10 @@ package com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.us
 
 import android.util.Log
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.ProfileRepository
-import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.UserResponse
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.ProfileUserResponse
 
 class GetUserDetailsUseCase(private val repository: ProfileRepository) {
-    suspend operator fun invoke(userId: String): ProfileResult<UserResponse> {
+    suspend operator fun invoke(userId: String): ProfileResult<ProfileUserResponse> {
         Log.d("API Request", "Fetching user details for user ID: $userId")
         return try {
             val result = repository.getUserDetails(userId)
@@ -19,7 +19,7 @@ class GetUserDetailsUseCase(private val repository: ProfileRepository) {
                     //ProfileResult.Error(it as Exception)
 
                     ProfileResult.Success(
-                        UserResponse(
+                        ProfileUserResponse(
                             id = "1",
                             name = "John Doe",
                             email = "",

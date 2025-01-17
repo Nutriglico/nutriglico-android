@@ -2,7 +2,7 @@ package com.fiap.startupone.nutriglico.features.usermanagement.profile.data.mode
 
 import com.google.gson.annotations.SerializedName
 
-data class UserResponse(
+data class ProfileUserResponse(
     @SerializedName("id") val id: String,
     @SerializedName("name") val name: String,
     @SerializedName("email") val email: String,

@@ -2,8 +2,8 @@ package com.fiap.startupone.nutriglico.features.usermanagement.profile.data.repo
 
 import android.util.Log
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.ProfileRepository
-import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.UserRequest
-import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.UserResponse
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.ProfileUserRequest
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.ProfileUserResponse
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.service.ProfileService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -13,14 +13,14 @@ class ProfileRepositoryImpl(
     private val profileService: ProfileService
 ) : ProfileRepository {
 
-    override suspend fun getUserDetails(userId: String): Result<UserResponse> = handleApiCall {
+    override suspend fun getUserDetails(userId: String): Result<ProfileUserResponse> = handleApiCall {
         Log.d("API Request", "Fetching user details for user ID: $userId")
         profileService.getUserDetails(userId)
     }
 
-    override suspend fun updateUser(userId: String, userRequest: UserRequest): Result<Unit> = handleApiCall {
+    override suspend fun updateUser(userId: String, profileUserRequest: ProfileUserRequest): Result<Unit> = handleApiCall {
         Log.d("API Request", "Updating user details for user ID: $userId")
-        profileService.updateUser(userId, userRequest)
+        profileService.updateUser(userId, profileUserRequest)
     }
 
     override suspend fun deleteUser(userId: String): Result<Unit> = handleApiCall {

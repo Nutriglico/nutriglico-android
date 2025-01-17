@@ -2,7 +2,7 @@ package com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.UserRequest
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.ProfileUserRequest
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.usecase.ProfileResult
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.usecase.UpdateUserUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,10 +16,10 @@ class EditProfileViewModel(
     private val _uiState = MutableStateFlow<EditProfileUIState>(EditProfileUIState.Idle)
     val uiState: StateFlow<EditProfileUIState> get() = _uiState
 
-    fun updateUser(userId: String, userRequest: UserRequest, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun updateUser(userId: String, profileUserRequest: ProfileUserRequest, onSuccess: () -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {
             _uiState.value = EditProfileUIState.Loading
-            val result = updateUserUseCase(userId, userRequest)
+            val result = updateUserUseCase(userId, profileUserRequest)
             _uiState.value = when (result) {
                 is ProfileResult.Success -> {
                     onSuccess()

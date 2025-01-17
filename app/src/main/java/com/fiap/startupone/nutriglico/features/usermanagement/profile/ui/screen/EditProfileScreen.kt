@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,11 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.fiap.startupone.nutriglico.commons.ui.CustomButton
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
-import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.UserRequest
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.ProfileUserRequest
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmodel.EditProfileUIState
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmodel.EditProfileViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -41,7 +39,7 @@ fun EditProfileScreen(
 
     val name = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
+    val cpf = remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -77,9 +75,9 @@ fun EditProfileScreen(
                 )
 
                 OutlinedTextField(
-                    value = password.value,
-                    onValueChange = { password.value = it },
-                    label = { Text("Senha") },
+                    value = cpf.value,
+                    onValueChange = { cpf.value = it },
+                    label = { Text("CPF") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -91,10 +89,10 @@ fun EditProfileScreen(
                     onClick = {
                         viewModel.updateUser(
                             userId = "userId_placeholder", // Trocar pelo ID real
-                            userRequest = UserRequest(
+                            profileUserRequest = ProfileUserRequest(
                                 name = name.value,
                                 email = email.value,
-                                password = password.value
+                                cpf = cpf.value
                             ),
                             onSuccess = {
                                 navController.popBackStack()
@@ -126,7 +124,7 @@ fun EditProfileScreen(
                         Text(
                             text = "Dados salvos com sucesso!",
                             fontSize = 16.sp,
-                            color = androidx.compose.ui.graphics.Color.Green,
+                            color = Color.Green,
                             modifier = Modifier.padding(vertical = 16.dp)
                         )
                         viewModel.resetState() // Resetando o estado após o sucesso
@@ -138,7 +136,7 @@ fun EditProfileScreen(
                         Text(
                             text = (uiState as EditProfileUIState.Error).message,
                             fontSize = 16.sp,
-                            color = androidx.compose.ui.graphics.Color.Red,
+                            color = Color.Red,
                             modifier = Modifier.padding(vertical = 16.dp)
                         )
                     }
