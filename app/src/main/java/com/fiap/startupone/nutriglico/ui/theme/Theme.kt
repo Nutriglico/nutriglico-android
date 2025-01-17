@@ -11,20 +11,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
-    background = Color.Black, // Definindo a cor de fundo para o tema escuro
-    surface = Color.Black
+private val LightColorScheme = lightColorScheme(
+    primary = PrimaryColor,
+    onPrimary = TextIconColor,
+    primaryContainer = LightPrimaryColor,
+    secondary = AccentColor,
+    onSecondary = TextIconColor,
+    background = Color.White,
+    onBackground = PrimaryTextColor,
+    surface = Color.White,
+    onSurface = SecondaryTextColor,
+    error = Color(0xFFB00020),  // Vermelho para erros
+    onError = TextIconColor
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
-    background = Color.White, // Definindo a cor de fundo para o tema claro
-    surface = Color.White
+private val DarkColorScheme = darkColorScheme(
+    primary = DarkPrimaryColor,
+    onPrimary = TextIconColor,
+    primaryContainer = PrimaryColor,
+    secondary = AccentColor,
+    onSecondary = TextIconColor,
+    background = Color.Black,
+    onBackground = TextIconColor,
+    surface = DarkPrimaryColor,
+    onSurface = SecondaryTextColor,
+    error = Color(0xFFCF6679),  // Vermelho para erros em tema escuro
+    onError = TextIconColor
 )
 
 @Composable
