@@ -42,8 +42,7 @@ fun HomeScreen(
             HomeContent(
                 modifier = Modifier
                     .padding(padding)
-                    .fillMaxSize()
-                    .background(Color(0xFFF8F8F8)), // Cor gelo
+                    .fillMaxSize(),
                 onCardClick = viewModel::onCardClick
             )
         }
