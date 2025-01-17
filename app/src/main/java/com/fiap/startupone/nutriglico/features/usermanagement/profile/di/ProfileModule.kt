@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.commons.di
+package com.fiap.startupone.nutriglico.features.usermanagement.profile.di
 
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.ProfileRepository
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.repository.ProfileRepositoryImpl

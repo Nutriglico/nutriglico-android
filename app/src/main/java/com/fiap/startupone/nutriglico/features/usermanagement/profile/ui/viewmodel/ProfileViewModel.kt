@@ -40,4 +40,8 @@ class ProfileViewModel(
         }
     }
 
+    fun showError(message: String) {
+        _uiState.value = ProfileUIState.Error(message)
+    }
+
 }

@@ -1,13 +1,13 @@
 package com.fiap.startupone.nutriglico
 
 import android.app.Application
-import com.fiap.startupone.nutriglico.commons.di.userAuthModule
-import com.fiap.startupone.nutriglico.commons.di.glicemicControlModule
-import com.fiap.startupone.nutriglico.commons.di.homeModule
-import com.fiap.startupone.nutriglico.commons.di.networkModule
-import com.fiap.startupone.nutriglico.commons.di.profileModule
-import com.fiap.startupone.nutriglico.commons.di.signupModule
-import com.fiap.startupone.nutriglico.commons.di.userManagementModule
+import com.fiap.startupone.nutriglico.features.usermanagement.auth.di.userAuthModule
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.di.glicemicControlModule
+import com.fiap.startupone.nutriglico.features.home.di.homeModule
+import com.fiap.startupone.nutriglico.commons.network.di.networkModule
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.di.profileModule
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.di.signupModule
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.di.userManagementModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level

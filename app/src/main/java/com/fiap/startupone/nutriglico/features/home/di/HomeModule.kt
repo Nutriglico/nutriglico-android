@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.commons.di
+package com.fiap.startupone.nutriglico.features.home.di
 
 import com.fiap.startupone.nutriglico.features.home.ui.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel

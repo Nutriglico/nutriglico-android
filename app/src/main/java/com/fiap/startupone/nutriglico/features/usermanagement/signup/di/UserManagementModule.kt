@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.commons.di
+package com.fiap.startupone.nutriglico.features.usermanagement.signup.di
 
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.UserManagementRepositoryImpl
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.domain.usecase.RegisterNutritionistUseCase

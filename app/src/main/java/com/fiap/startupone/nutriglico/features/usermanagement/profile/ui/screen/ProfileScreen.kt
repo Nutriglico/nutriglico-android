@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.fiap.startupone.nutriglico.commons.ui.CustomButton
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
@@ -80,7 +79,9 @@ fun ProfileScreen(
                                 viewModel.deleteAccount(
                                     userId = user.id,
                                     onSuccess = { navController.navigate("login") { popUpTo(0) } },
-                                    onError = { /* Exibir mensagem de erro */ }
+                                    onError = { errorMessage ->
+                                        viewModel.showError(errorMessage)
+                                    }
                                 )
                             }
                         )

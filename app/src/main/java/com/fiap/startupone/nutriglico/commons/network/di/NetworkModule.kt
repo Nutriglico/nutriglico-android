@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.commons.di
+package com.fiap.startupone.nutriglico.commons.network.di
 
 import com.fiap.startupone.nutriglico.commons.network.LoggingInterceptor
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.service.GlicemicHistoryService

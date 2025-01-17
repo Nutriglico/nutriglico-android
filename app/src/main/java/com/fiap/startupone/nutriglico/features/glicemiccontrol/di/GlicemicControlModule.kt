@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.commons.di
+package com.fiap.startupone.nutriglico.features.glicemiccontrol.di
 
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.GlicemicHistoryRepositoryImpl
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.domain.usecase.DeleteGlicemicRecordUseCase
