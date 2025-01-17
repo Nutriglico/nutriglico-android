@@ -30,6 +30,7 @@ import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.ui.Regis
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.viewmodel.RegisterGlicemicControlViewModel
 import com.fiap.startupone.nutriglico.features.home.ui.HomeScreen
 import com.fiap.startupone.nutriglico.features.home.viewmodel.HomeViewModel
+import com.fiap.startupone.nutriglico.features.menu.ui.MenuScreen
 import com.fiap.startupone.nutriglico.ui.theme.NutriGlicoTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -80,7 +81,7 @@ fun MainScreen(context: MainActivity) {
                 executeMealsScreen()
             }
             composable(route = "menu") {
-                executeMenuScreen()
+                executeMenuScreen(navController = navController)
             }
         }
     }
@@ -145,8 +146,8 @@ fun executeMealsScreen() {
 }
 
 @Composable
-fun executeMenuScreen() {
-    // Conteúdo da tela de menu
+fun executeMenuScreen(navController: NavController) {
+    MenuScreen(navController = navController)
 }
 
 @Preview(showBackground = true)
