@@ -6,6 +6,10 @@ import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model
 
 class GetUserDetailsUseCase(private val repository: ProfileRepository) {
     suspend operator fun invoke(userId: String): ProfileResult<ProfileUserResponse> {
+        if (userId.isBlank()) {
+            return ProfileResult.Error(IllegalArgumentException("User ID não pode ser vazio"))
+        }
+
         Log.d("API Request", "Fetching user details for user ID: $userId")
         return try {
             val result = repository.getUserDetails(userId)

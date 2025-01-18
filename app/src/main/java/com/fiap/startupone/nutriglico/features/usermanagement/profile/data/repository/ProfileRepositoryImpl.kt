@@ -36,8 +36,9 @@ class ProfileRepositoryImpl(
                     Log.d("API Success", "Response: ${response.body()}")
                     Result.success(response.body()!!)
                 } else {
-                    Log.e("API Error", "Response: ${response.code()} - ${response.message()}")
-                    Result.failure(Exception("Erro: ${response.code()} - ${response.message()}"))
+                    val errorMessage = response.errorBody()?.string() ?: response.message()
+                    Log.e("API Error", "Response: ${response.code()} - $errorMessage")
+                    Result.failure(Exception(errorMessage))
                 }
             } catch (e: Exception) {
                 Log.e("API Error", "Exception: ${e.message}", e)

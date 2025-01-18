@@ -1,21 +1,19 @@
 package com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.usecase
 
+import android.util.Log
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.ProfileRepository
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.ProfileUserResponse
-import com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.usecase.GetUserDetailsUseCase
-import com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.usecase.ProfileResult
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(RobolectricTestRunner::class)
 class GetUserDetailsUseCaseTest {
 
     private lateinit var repository: ProfileRepository
@@ -23,6 +21,11 @@ class GetUserDetailsUseCaseTest {
 
     @Before
     fun setUp() {
+        mockkStatic(Log::class)
+        every { Log.d(any(), any()) } returns 0
+        every { Log.e(any(), any()) } returns 0
+        every { Log.e(any(), any(), any()) } returns 0
+
         repository = mockk()
         getUserDetailsUseCase = GetUserDetailsUseCase(repository)
     }
@@ -54,4 +57,37 @@ class GetUserDetailsUseCaseTest {
 
         assertEquals(ProfileResult.Error(exception), result)
     }
+
+    @Test
+    fun `invoke should handle generic exception`() = runTest {
+        val userId = "123"
+        coEvery { repository.getUserDetails(userId) } throws RuntimeException("Erro genérico")
+
+        val result = getUserDetailsUseCase(userId)
+
+        assert(result is ProfileResult.Error)
+        assertEquals("Erro genérico", (result as ProfileResult.Error).exception.message)
+    }
+
+    @Test
+    fun `invoke should return Error when userId is empty`() = runTest {
+        val userId = ""
+        val result = getUserDetailsUseCase(userId)
+
+        assert(result is ProfileResult.Error)
+        assertEquals("User ID não pode ser vazio", (result as ProfileResult.Error).exception.message)
+    }
+
+    @Test
+    fun `invoke should return Error when there is a network failure`() = runTest {
+        val userId = "123"
+        val exception = Exception("Falha de conexão")
+        coEvery { repository.getUserDetails(userId) } throws exception
+
+        val result = getUserDetailsUseCase(userId)
+
+        assert(result is ProfileResult.Error)
+        assertEquals("Falha de conexão", (result as ProfileResult.Error).exception.message)
+    }
+
 }

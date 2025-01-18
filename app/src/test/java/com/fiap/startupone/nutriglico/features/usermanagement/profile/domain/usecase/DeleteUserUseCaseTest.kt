@@ -1,8 +1,6 @@
 package com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.usecase
 
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.ProfileRepository
-import com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.usecase.DeleteUserUseCase
-import com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.usecase.ProfileResult
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

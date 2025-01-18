@@ -50,6 +50,53 @@ class UpdateUserUseCaseTest {
 
         val result = updateUserUseCase(userId, profileUserRequest)
 
-        assertEquals(ProfileResult.Error(exception), result)
+        assert(result is ProfileResult.Error)
+        assertEquals("Erro desconhecido", (result as ProfileResult.Error).exception.message)
+    }
+
+    @Test
+    fun `invoke should return Error when userId is blank`() = runTest {
+        val userId = ""
+        val profileUserRequest = ProfileUserRequest(
+            name = "John Doe",
+            email = "john.doe@example.com",
+            cpf = "111.222.333-44"
+        )
+
+        val result = updateUserUseCase(userId, profileUserRequest)
+
+        assert(result is ProfileResult.Error)
+        assertEquals("User ID não pode ser vazio", (result as ProfileResult.Error).exception.message)
+    }
+
+    @Test
+    fun `invoke should return Error when profileUserRequest is invalid`() = runTest {
+        val userId = "123"
+        val profileUserRequest = ProfileUserRequest(
+            name = "",
+            email = "",
+            cpf = ""
+        )
+
+        val result = updateUserUseCase(userId, profileUserRequest)
+
+        assert(result is ProfileResult.Error)
+        assertEquals("Dados do usuário inválidos", (result as ProfileResult.Error).exception.message)
+    }
+
+    @Test
+    fun `invoke should return Error when unexpected exception occurs`() = runTest {
+        val userId = "123"
+        val profileUserRequest = ProfileUserRequest(
+            name = "John Doe",
+            email = "john.doe@example.com",
+            cpf = "111.222.333-44"
+        )
+        coEvery { repository.updateUser(userId, profileUserRequest) } throws RuntimeException("Erro inesperado")
+
+        val result = updateUserUseCase(userId, profileUserRequest)
+
+        assert(result is ProfileResult.Error)
+        assertEquals("Erro inesperado", (result as ProfileResult.Error).exception.message)
     }
 }

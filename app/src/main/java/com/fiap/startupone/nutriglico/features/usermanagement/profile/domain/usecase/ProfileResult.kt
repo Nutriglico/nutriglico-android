@@ -2,5 +2,5 @@ package com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.us
 
 sealed class ProfileResult<out T> {
     data class Success<out T>(val data: T) : ProfileResult<T>()
-    data class Error(val exception: Exception) : ProfileResult<Nothing>()
+    data class Error(val exception: Throwable) : ProfileResult<Nothing>()
 }
