@@ -12,7 +12,7 @@ class ProfileRepositoryImpl(
     profileService: ProfileService
 ) : ProfileRepository {
 
-    private val actualService: ProfileService = if (FeatureFlags.USE_MOCKS) {
+    internal var actualService: ProfileService = if (FeatureFlags.USE_MOCKS) {
         MockProfileService()
     } else {
         profileService
