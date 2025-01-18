@@ -37,8 +37,12 @@ class GlicemicRecordDetailViewModel(
 
         viewModelScope.launch {
             try {
-                val record = fetchGlicemicDetailsUseCase(id)
-                _recordState.value = RecordState.Success(record)
+                val result = fetchGlicemicDetailsUseCase(id)
+                if (result.isSuccess) {
+                    _recordState.value = RecordState.Success(result.getOrThrow())
+                } else {
+                    _recordState.value = RecordState.Error(result.exceptionOrNull()?.message ?: "Erro ao carregar o registro")
+                }
             } catch (e: Exception) {
                 _recordState.value = RecordState.Error(e.message ?: "Erro ao carregar o registro")
             }
