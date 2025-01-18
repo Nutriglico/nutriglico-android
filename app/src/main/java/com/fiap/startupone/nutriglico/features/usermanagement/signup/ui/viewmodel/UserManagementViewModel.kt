@@ -2,7 +2,7 @@ package com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.viewmod
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.SignUpUserRequest
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.UserManagementRequest
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.domain.usecase.RegisterNutritionistUseCase
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.domain.usecase.RegisterPatientUseCase
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.domain.usecase.UserManagementResult
@@ -18,10 +18,10 @@ class UserManagementViewModel(
     private val _uiState = MutableStateFlow<UserManagementUIState>(UserManagementUIState.Idle)
     val uiState: StateFlow<UserManagementUIState> get() = _uiState
 
-    fun registerPatient(signUpUserRequest: SignUpUserRequest) {
+    fun registerPatient(userManagementRequest: UserManagementRequest) {
         viewModelScope.launch {
             _uiState.value = UserManagementUIState.Loading
-            val result = registerPatientUseCase(signUpUserRequest)
+            val result = registerPatientUseCase(userManagementRequest)
             _uiState.value = when (result) {
                 is UserManagementResult.Success -> UserManagementUIState.Success
                 is UserManagementResult.Error -> UserManagementUIState.Error(result.exception.message ?: "Erro desconhecido")
@@ -30,10 +30,10 @@ class UserManagementViewModel(
         }
     }
 
-    fun registerNutritionist(signUpUserRequest: SignUpUserRequest) {
+    fun registerNutritionist(userManagementRequest: UserManagementRequest) {
         viewModelScope.launch {
             _uiState.value = UserManagementUIState.Loading
-            val result = registerNutritionistUseCase(signUpUserRequest)
+            val result = registerNutritionistUseCase(userManagementRequest)
             _uiState.value = when (result) {
                 is UserManagementResult.Success -> UserManagementUIState.Success
                 is UserManagementResult.Error -> UserManagementUIState.Error(result.exception.message ?: "Erro desconhecido")

@@ -1,19 +1,27 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.repository
 
 import android.util.Log
+import com.fiap.startupone.nutriglico.commons.util.FeatureFlags
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.GlicemicHistoryRepository
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.model.GlicemicHistoryResponse
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.service.GlicemicHistoryService
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.service.MockGlicemicHistoryService
 import retrofit2.HttpException
 import java.io.IOException
 
 class GlicemicHistoryRepositoryImpl(
-    private val service: GlicemicHistoryService
+    service: GlicemicHistoryService
 ) : GlicemicHistoryRepository {
+
+    private val actualService: GlicemicHistoryService = if (FeatureFlags.USE_MOCKS) {
+        MockGlicemicHistoryService()
+    } else {
+        service
+    }
 
     override suspend fun fetchHistory(): Result<List<GlicemicHistoryResponse>> {
         return try {
-            val response = service.getHistory()
+            val response = actualService.getHistory()
             Result.success(response.ifEmpty { emptyList() })
         } catch (e: IOException) {
             Log.e("API Error", "IOException: ${e.message}", e)
@@ -26,7 +34,7 @@ class GlicemicHistoryRepositoryImpl(
 
     override suspend fun fetchDetails(id: String): Result<GlicemicHistoryResponse> {
         return try {
-            val response = service.getDetails(id)
+            val response = actualService.getDetails(id)
             Result.success(response)
         } catch (e: IOException) {
             Log.e("API Error", "IOException: ${e.message}", e)
@@ -39,7 +47,7 @@ class GlicemicHistoryRepositoryImpl(
 
     override suspend fun updateRecord(record: GlicemicHistoryResponse): Result<Unit> {
         return try {
-            service.updateRecord(record.id, record)
+            actualService.updateRecord(record.id, record)
             Result.success(Unit)
         } catch (e: IOException) {
             Log.e("API Error", "IOException: ${e.message}", e)
@@ -52,7 +60,7 @@ class GlicemicHistoryRepositoryImpl(
 
     override suspend fun deleteRecord(id: String): Result<Unit> {
         return try {
-            service.deleteRecord(id)
+            actualService.deleteRecord(id)
             Result.success(Unit)
         } catch (e: IOException) {
             Log.e("API Error", "IOException: ${e.message}", e)

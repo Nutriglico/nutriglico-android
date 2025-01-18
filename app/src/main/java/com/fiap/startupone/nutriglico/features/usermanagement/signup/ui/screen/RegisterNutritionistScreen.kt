@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.SignUpUserRequest
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.UserManagementRequest
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.viewmodel.UserManagementUIState
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.viewmodel.UserManagementViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -96,7 +96,7 @@ fun RegisterNutritionistScreen(
                 Button(
                     onClick = {
                         viewModel.registerNutritionist(
-                            signUpUserRequest = SignUpUserRequest(
+                            userManagementRequest = UserManagementRequest(
                                 name = name.value,
                                 email = email.value,
                                 password = password.value,

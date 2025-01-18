@@ -9,8 +9,6 @@ import com.fiap.startupone.nutriglico.features.usermanagement.auth.ui.viewmodel.
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.screen.RegisterNutritionistScreen
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.screen.RegisterPatientScreen
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.screen.SelectProfileScreen
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.screen.UserSignUpScreen
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.ui.viewmodel.UserSignUpViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -24,9 +22,6 @@ fun AuthNavigation(
     ) {
         composable(AuthScreen.Login.route) {
             ExecuteUserAuthScreen(navController, onAuthSuccess)
-        }
-        composable(AuthScreen.SignUp.route) {
-            ExecuteUserSignUpScreen(navController, onAuthSuccess)
         }
         composable(AuthScreen.SelectProfile.route) {
             ExecuteSelectProfileScreen(navController)
@@ -53,21 +48,6 @@ fun ExecuteUserAuthScreen(
             navController.navigate(AuthScreen.SelectProfile.route)
         },
         onForgotPasswordClick = { /* Implementação futura */ }
-    )
-}
-
-@Composable
-fun ExecuteUserSignUpScreen(
-    navController: NavHostController,
-    onAuthSuccess: () -> Unit
-) {
-    // Layout do cadastro do paciente
-    // Campos obrigatórios: Nome, Email, Senha, Data de Nascimento
-    val viewModel: UserSignUpViewModel = koinViewModel()
-    UserSignUpScreen(
-        viewModel = viewModel,
-        onBack = { navController.popBackStack() },
-        onSignUpSuccess = onAuthSuccess
     )
 }
 
