@@ -16,24 +16,34 @@ class EditProfileViewModel(
     private val _uiState = MutableStateFlow<EditProfileUIState>(EditProfileUIState.Idle)
     val uiState: StateFlow<EditProfileUIState> get() = _uiState
 
-    fun updateUser(userId: String, profileUserRequest: ProfileUserRequest, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun updateUser(name: String, email: String, cpf: String, onSuccess: () -> Unit) {
         viewModelScope.launch {
             _uiState.value = EditProfileUIState.Loading
-            val result = updateUserUseCase(userId, profileUserRequest)
-            _uiState.value = when (result) {
-                is ProfileResult.Success -> {
-                    onSuccess()
-                    EditProfileUIState.Success
+            try {
+                val userId = retrieveUserId()
+                val profileUserRequest = ProfileUserRequest(name, email, cpf)
+
+                when (val result = updateUserUseCase(userId, profileUserRequest)) {
+                    is ProfileResult.Success -> {
+                        onSuccess()
+                        _uiState.value = EditProfileUIState.Success
+                    }
+                    is ProfileResult.Error -> {
+                        _uiState.value = EditProfileUIState.Error(result.exception.message ?: "Erro desconhecido")
+                    }
                 }
-                is ProfileResult.Error -> {
-                    onError(result.exception.message ?: "Erro desconhecido")
-                    EditProfileUIState.Error(result.exception.message ?: "Erro desconhecido")
-                }
+            } catch (e: Exception) {
+                _uiState.value = EditProfileUIState.Error("Erro inesperado: ${e.message}")
             }
         }
     }
 
     fun resetState() {
         _uiState.value = EditProfileUIState.Idle
+    }
+
+    private fun retrieveUserId(): String {
+        // Simulação para recuperar o ID do usuário
+        return "1"
     }
 }

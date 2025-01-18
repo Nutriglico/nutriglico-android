@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.fiap.startupone.nutriglico.commons.ui.CustomButton
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
-import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.ProfileUserRequest
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmodel.EditProfileUIState
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmodel.EditProfileViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -78,7 +77,7 @@ fun EditProfileScreen(
                     value = cpf.value,
                     onValueChange = { cpf.value = it },
                     label = { Text("CPF") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
@@ -88,23 +87,18 @@ fun EditProfileScreen(
                     text = "Salvar",
                     onClick = {
                         viewModel.updateUser(
-                            userId = "userId_placeholder", // Trocar pelo ID real
-                            profileUserRequest = ProfileUserRequest(
-                                name = name.value,
-                                email = email.value,
-                                cpf = cpf.value
-                            ),
+                            name = name.value,
+                            email = email.value,
+                            cpf = cpf.value,
                             onSuccess = {
                                 navController.popBackStack()
-                            },
-                            onError = { /* Exibir mensagem de erro */ }
+                            }
                         )
                     }
                 )
 
                 when (uiState) {
                     EditProfileUIState.Idle -> {
-                        // Estado inicial, exibe um formulário vazio ou mensagem
                         Text(
                             text = "Edite as informações e clique em salvar.",
                             fontSize = 16.sp,
@@ -127,12 +121,11 @@ fun EditProfileScreen(
                             color = Color.Green,
                             modifier = Modifier.padding(vertical = 16.dp)
                         )
-                        viewModel.resetState() // Resetando o estado após o sucesso
-                        navController.popBackStack() // Navegando para a tela anterior
+                        viewModel.resetState()
+                        navController.popBackStack()
                     }
 
                     is EditProfileUIState.Error -> {
-                        // Exibe o erro
                         Text(
                             text = (uiState as EditProfileUIState.Error).message,
                             fontSize = 16.sp,
@@ -141,7 +134,6 @@ fun EditProfileScreen(
                         )
                     }
                 }
-
             }
         }
     )

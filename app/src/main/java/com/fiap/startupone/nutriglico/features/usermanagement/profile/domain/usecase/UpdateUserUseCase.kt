@@ -4,13 +4,19 @@ import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.ProfileRepository
 
 class UpdateUserUseCase(private val repository: ProfileRepository) {
+
+    companion object {
+        const val ERROR_USER_ID = "User ID não pode ser vazio"
+        const val ERROR_INVALID_USER = "Dados do usuário inválidos"
+    }
+
     suspend operator fun invoke(userId: String, profileUserRequest: ProfileUserRequest): ProfileResult<Unit> {
         if (userId.isBlank()) {
-            return ProfileResult.Error(IllegalArgumentException("User ID não pode ser vazio"))
+            return ProfileResult.Error(IllegalArgumentException(ERROR_USER_ID))
         }
 
         if (!isValidProfileRequest(profileUserRequest)) {
-            return ProfileResult.Error(IllegalArgumentException("Dados do usuário inválidos"))
+            return ProfileResult.Error(IllegalArgumentException(ERROR_INVALID_USER))
         }
 
         return try {
