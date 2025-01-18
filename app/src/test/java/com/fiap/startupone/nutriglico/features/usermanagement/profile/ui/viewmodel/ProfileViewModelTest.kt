@@ -1,7 +1,6 @@
 package com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmodel
 
 import android.util.Log
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.fiap.startupone.nutriglico.MainDispatcherRule
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.ProfileUserResponse
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.domain.usecase.DeleteUserUseCase
@@ -14,14 +13,10 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.TestScope
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProfileViewModelTest {
