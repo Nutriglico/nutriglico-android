@@ -1,10 +1,13 @@
 package com.fiap.startupone.nutriglico.features.usermanagement.profile.data.repository
 
+import android.util.Log
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.ProfileUserRequest
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.model.ProfileUserResponse
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.data.service.ProfileService
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -20,6 +23,11 @@ class ProfileRepositoryImplTest {
 
     @Before
     fun setUp() {
+        mockkStatic(Log::class)
+        every { Log.d(any(), any()) } returns 0
+        every { Log.e(any(), any()) } returns 0
+        every { Log.e(any(), any(), any()) } returns 0
+
         profileService = mockk()
         profileRepository = ProfileRepositoryImpl(profileService)
     }
@@ -44,7 +52,7 @@ class ProfileRepositoryImplTest {
     @Test
     fun `getUserDetails should return Error when service returns failure`() = runTest {
         val userId = "123"
-        coEvery { profileService.getUserDetails(userId) } returns Response.error(404, mockk())
+        coEvery { profileService.getUserDetails(userId) } returns Response.error(404, mockk(relaxed = true))
 
         val result = profileRepository.getUserDetails(userId)
 
@@ -74,7 +82,7 @@ class ProfileRepositoryImplTest {
             email = "john.doe@example.com",
             cpf = "123.456.789-00"
         )
-        coEvery { profileService.updateUser(userId, profileUserRequest) } returns Response.error(404, mockk())
+        coEvery { profileService.updateUser(userId, profileUserRequest) } returns Response.error(404, mockk(relaxed = true))
 
         val result = profileRepository.updateUser(userId, profileUserRequest)
 
@@ -94,7 +102,7 @@ class ProfileRepositoryImplTest {
     @Test
     fun `deleteUser should return Error when service returns failure`() = runTest {
         val userId = "123"
-        coEvery { profileService.deleteUser(userId) } returns Response.error(404, mockk())
+        coEvery { profileService.deleteUser(userId) } returns Response.error(404, mockk(relaxed = true))
 
         val result = profileRepository.deleteUser(userId)
 

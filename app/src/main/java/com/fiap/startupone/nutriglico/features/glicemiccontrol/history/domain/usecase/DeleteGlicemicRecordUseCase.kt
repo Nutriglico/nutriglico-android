@@ -1,6 +1,6 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.history.domain.usecase
 
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.repository.GlicemicHistoryRepository
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.GlicemicHistoryRepository
 
 class DeleteGlicemicRecordUseCase(
     private val repository: GlicemicHistoryRepository

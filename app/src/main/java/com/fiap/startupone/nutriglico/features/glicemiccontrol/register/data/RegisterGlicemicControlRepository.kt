@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.repository
+package com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data
 
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.GlicemicLevelResponse
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.RegisterGlicemicLevelRequest

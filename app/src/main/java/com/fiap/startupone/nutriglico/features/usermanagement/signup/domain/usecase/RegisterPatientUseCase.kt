@@ -1,7 +1,7 @@
 package com.fiap.startupone.nutriglico.features.usermanagement.signup.domain.usecase
 
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.SignUpUserRequest
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.repository.UserManagementRepository
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.UserManagementRepository
 
 class RegisterPatientUseCase(private val repository: UserManagementRepository) {
     suspend operator fun invoke(signUpUserRequest: SignUpUserRequest): UserManagementResult<Unit> {

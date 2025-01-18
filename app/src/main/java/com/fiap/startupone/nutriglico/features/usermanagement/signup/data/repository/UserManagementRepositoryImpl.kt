@@ -1,9 +1,9 @@
-package com.fiap.startupone.nutriglico.features.usermanagement.signup.data
+package com.fiap.startupone.nutriglico.features.usermanagement.signup.data.repository
 
+import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.UserManagementRepository
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.SignUpUserRequest
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.model.SignUpUserResponse
 import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.service.UserManagementService
-import com.fiap.startupone.nutriglico.features.usermanagement.signup.data.repository.UserManagementRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

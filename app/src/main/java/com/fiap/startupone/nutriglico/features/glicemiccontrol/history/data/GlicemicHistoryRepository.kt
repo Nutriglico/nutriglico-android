@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.repository
+package com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data
 
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.model.GlicemicHistoryResponse
 

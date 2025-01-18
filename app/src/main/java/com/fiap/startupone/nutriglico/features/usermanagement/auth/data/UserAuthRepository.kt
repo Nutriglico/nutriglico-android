@@ -1,4 +1,4 @@
-package com.fiap.startupone.nutriglico.features.usermanagement.auth.data.repository
+package com.fiap.startupone.nutriglico.features.usermanagement.auth.data
 
 import com.fiap.startupone.nutriglico.commons.model.User
 

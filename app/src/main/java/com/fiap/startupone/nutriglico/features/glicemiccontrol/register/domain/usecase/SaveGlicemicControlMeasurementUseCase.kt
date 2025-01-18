@@ -1,6 +1,6 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.register.domain.usecase
 
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.repository.RegisterGlicemicControlRepository
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.RegisterGlicemicControlRepository
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.domain.factory.RegisterGlicemicLevelRequestFactory
 
 class SaveGlicemicControlMeasurementUseCase(

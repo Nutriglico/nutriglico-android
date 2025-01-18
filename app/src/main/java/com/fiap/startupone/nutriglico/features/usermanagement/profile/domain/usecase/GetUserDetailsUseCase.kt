@@ -17,17 +17,6 @@ class GetUserDetailsUseCase(private val repository: ProfileRepository) {
                 onFailure = {
                     Log.e("API Error", "Response: ${it.message}")
                     ProfileResult.Error(it as Exception)
-
-//                    Mock profile user response
-//                    ProfileResult.Success(
-//                        ProfileUserResponse(
-//                            id = "1",
-//                            name = "John Doe",
-//                            email = "",
-//                            createdAt = "2021-10-01T00:00:00Z",
-//                            updatedAt = "2021-10-01T00:00:00Z"
-//                        )
-//                    )
                 }
             )
         } catch (e: Exception) {

@@ -1,7 +1,7 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.history.domain.usecase
 
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.model.GlicemicHistoryResponse
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.repository.GlicemicHistoryRepository
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.GlicemicHistoryRepository
 
 class FetchGlicemicDetailsUseCase(
     private val repository: GlicemicHistoryRepository
