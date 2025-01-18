@@ -11,8 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import org.koin.dsl.module
 
 // Constantes para as URLs base
-private const val BASE_URL_GLICEMIC_CONTROL = "https://api.glicemiccontrol.com/"
-private const val BASE_URL_USER_MANAGEMENT = "https://api.usermanagement.com/"
+private const val BASE_URL_GLICEMIC_CONTROL = "http://10.0.2.2:3000"
+private const val BASE_URL_USER_MANAGEMENT = "https://10.0.2.2:5238/"
 
 // Função genérica para criar Retrofit com uma base URL
 private fun createRetrofit(baseUrl: String): Retrofit {
