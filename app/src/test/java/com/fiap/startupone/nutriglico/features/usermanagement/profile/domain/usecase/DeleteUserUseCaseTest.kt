@@ -39,6 +39,27 @@ class DeleteUserUseCaseTest {
 
         val result = deleteUserUseCase(userId)
 
-        assertEquals(ProfileResult.Error(exception), result)
+        assert(result is ProfileResult.Error)
+        assertEquals("Erro desconhecido", (result as ProfileResult.Error).exception.message)
+    }
+
+    @Test
+    fun `invoke should return Error when userId is empty`() = runTest {
+        val userId = ""
+        val result = deleteUserUseCase(userId)
+
+        assert(result is ProfileResult.Error)
+        assertEquals("User ID não pode ser vazio", (result as ProfileResult.Error).exception.message)
+    }
+
+    @Test
+    fun `invoke should return Error when unexpected exception occurs`() = runTest {
+        val userId = "123"
+        coEvery { repository.deleteUser(userId) } throws RuntimeException("Erro inesperado")
+
+        val result = deleteUserUseCase(userId)
+
+        assert(result is ProfileResult.Error)
+        assertEquals("Erro inesperado", (result as ProfileResult.Error).exception.message)
     }
 }
