@@ -23,25 +23,25 @@ fun AuthNavigation(
         startDestination = AuthScreen.Login.route
     ) {
         composable(AuthScreen.Login.route) {
-            executeUserAuthScreen(navController, onAuthSuccess)
+            ExecuteUserAuthScreen(navController, onAuthSuccess)
         }
         composable(AuthScreen.SignUp.route) {
-            executeUserSignUpScreen(navController, onAuthSuccess)
+            ExecuteUserSignUpScreen(navController, onAuthSuccess)
         }
         composable(AuthScreen.SelectProfile.route) {
-            executeSelectProfileScreen(navController)
+            ExecuteSelectProfileScreen(navController)
         }
         composable(AuthScreen.RegisterPatient.route) {
-            executeRegisterPatientScreen(navController, onAuthSuccess)
+            ExecuteRegisterPatientScreen(navController, onAuthSuccess)
         }
         composable(AuthScreen.RegisterNutritionist.route) {
-            executeRegisterNutritionistScreen(navController, onAuthSuccess)
+            ExecuteRegisterNutritionistScreen(navController, onAuthSuccess)
         }
     }
 }
 
 @Composable
-fun executeUserAuthScreen(
+fun ExecuteUserAuthScreen(
     navController: NavHostController,
     onAuthSuccess: () -> Unit
 ) {
@@ -57,7 +57,7 @@ fun executeUserAuthScreen(
 }
 
 @Composable
-fun executeUserSignUpScreen(
+fun ExecuteUserSignUpScreen(
     navController: NavHostController,
     onAuthSuccess: () -> Unit
 ) {
@@ -72,7 +72,7 @@ fun executeUserSignUpScreen(
 }
 
 @Composable
-fun executeSelectProfileScreen(
+fun ExecuteSelectProfileScreen(
     navController: NavHostController
 ) {
     SelectProfileScreen(
@@ -83,7 +83,7 @@ fun executeSelectProfileScreen(
 }
 
 @Composable
-fun executeRegisterPatientScreen(
+fun ExecuteRegisterPatientScreen(
     navController: NavHostController,
     onAuthSuccess: () -> Unit
 ) {
@@ -94,7 +94,7 @@ fun executeRegisterPatientScreen(
 }
 
 @Composable
-fun executeRegisterNutritionistScreen(
+fun ExecuteRegisterNutritionistScreen(
     navController: NavHostController,
     onAuthSuccess: () -> Unit
 ) {
@@ -102,12 +102,4 @@ fun executeRegisterNutritionistScreen(
         navController = navController,
         onRegisterSuccess = { onAuthSuccess() }
     )
-}
-
-sealed class AuthScreen(val route: String) {
-    object Login : AuthScreen("login")
-    object SignUp : AuthScreen("signup")
-    object SelectProfile : AuthScreen("selectProfile")
-    object RegisterPatient : AuthScreen("registerPatient")
-    object RegisterNutritionist : AuthScreen("registerNutritionist")
 }

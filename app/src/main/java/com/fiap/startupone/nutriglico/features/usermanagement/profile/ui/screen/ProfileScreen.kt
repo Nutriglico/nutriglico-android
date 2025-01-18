@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,13 +20,15 @@ import com.fiap.startupone.nutriglico.commons.ui.CustomButton
 import com.fiap.startupone.nutriglico.commons.ui.CustomTopBar
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmodel.ProfileUIState
 import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmodel.ProfileViewModel
+import com.fiap.startupone.nutriglico.features.usermanagement.profile.ui.viewmodel.ProfileViewModelContract
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreen(
+    viewModel: ProfileViewModelContract = koinViewModel<ProfileViewModel>(),
     navController: NavController,
     userId: String,
-    viewModel: ProfileViewModel = koinViewModel()
+    navigateToLogin: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -49,22 +52,8 @@ fun ProfileScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 when (uiState) {
-                    ProfileUIState.Idle -> {
-                        Text(
-                            text = "Inicializando...",
-                            fontSize = 16.sp,
-                            modifier = Modifier.padding(vertical = 16.dp)
-                        )
-                    }
-
-                    ProfileUIState.Loading -> {
-                        Text(
-                            text = "Carregando dados...",
-                            fontSize = 16.sp,
-                            modifier = Modifier.padding(vertical = 16.dp)
-                        )
-                    }
-
+                    ProfileUIState.Idle -> CircularProgressIndicator()
+                    ProfileUIState.Loading -> CircularProgressIndicator()
                     is ProfileUIState.Success -> {
                         val user = (uiState as ProfileUIState.Success).user
                         Text("Nome: ${user.name}", fontSize = 18.sp, modifier = Modifier.padding(vertical = 8.dp))
@@ -78,15 +67,12 @@ fun ProfileScreen(
                             onClick = {
                                 viewModel.deleteAccount(
                                     userId = user.id,
-                                    onSuccess = { navController.navigate("login") { popUpTo(0) } },
-                                    onError = { errorMessage ->
-                                        viewModel.showError(errorMessage)
-                                    }
+                                    onSuccess = { navigateToLogin() },
+                                    onError = { errorMessage -> viewModel.showError(errorMessage) }
                                 )
                             }
                         )
                     }
-
                     is ProfileUIState.Error -> {
                         Text(
                             text = (uiState as ProfileUIState.Error).message,

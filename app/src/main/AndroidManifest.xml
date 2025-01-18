@@ -21,7 +21,7 @@
             android:name=".features.usermanagement.AuthActivity"
             android:exported="false" />
         <activity
-            android:name=".features.MainActivity"
+            android:name=".features.home.MainActivity"
             android:exported="false" />
         <activity
             android:name=".features.glicemiccontrol.register.ui.screen.RegisterGlicemicControlActivity"

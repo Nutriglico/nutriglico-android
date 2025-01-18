@@ -13,12 +13,12 @@ import kotlinx.coroutines.launch
 class ProfileViewModel(
     private val getUserDetailsUseCase: GetUserDetailsUseCase,
     private val deleteUserUseCase: DeleteUserUseCase
-) : ViewModel() {
+) : ViewModel(), ProfileViewModelContract {
 
     private val _uiState = MutableStateFlow<ProfileUIState>(ProfileUIState.Idle)
-    val uiState: StateFlow<ProfileUIState> get() = _uiState
+    override val uiState: StateFlow<ProfileUIState> get() = _uiState
 
-    fun loadUserDetails(userId: String) {
+    override fun loadUserDetails(userId: String) {
         Log.d("API Request", "Loading user details for user ID: $userId")
         viewModelScope.launch {
             _uiState.value = ProfileUIState.Loading
@@ -30,7 +30,7 @@ class ProfileViewModel(
         }
     }
 
-    fun deleteAccount(userId: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    override fun deleteAccount(userId: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
         Log.d("API Request", "Deleting account for user ID: $userId")
         viewModelScope.launch {
             when (val result = deleteUserUseCase(userId)) {
@@ -40,7 +40,7 @@ class ProfileViewModel(
         }
     }
 
-    fun showError(message: String) {
+    override fun showError(message: String) {
         _uiState.value = ProfileUIState.Error(message)
     }
 
