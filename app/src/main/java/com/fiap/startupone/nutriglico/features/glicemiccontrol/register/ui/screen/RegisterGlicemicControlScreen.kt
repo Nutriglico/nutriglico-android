@@ -42,6 +42,7 @@ import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.Reg
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.GlicemicLevelResponse
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.RegisterGlicemicLevelRequest
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.service.RegisterGlicemicControlService
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.domain.factory.RegisterGlicemicLevelRequestFactory
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.domain.usecase.SaveGlicemicControlMeasurementUseCase
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.ui.viewmodel.RegisterGlicemicControlViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -201,7 +202,10 @@ fun HomeScreenPreview() {
         }
     }
     val mockRepository = RegisterGlicemicControlRepositoryImpl(service = mockService)
-    val mockSaveMeasurementUseCase = SaveGlicemicControlMeasurementUseCase(repository = mockRepository)
+    val mockSaveMeasurementUseCase = SaveGlicemicControlMeasurementUseCase(
+        repository = mockRepository,
+        requestFactory = RegisterGlicemicLevelRequestFactory()
+    )
     val mockViewModel = RegisterGlicemicControlViewModel(saveMeasurementUseCase = mockSaveMeasurementUseCase)
     val navController = rememberNavController()
     RegisterGlicemicControlScreen(

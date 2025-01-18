@@ -1,34 +1,24 @@
 package com.fiap.startupone.nutriglico.features.glicemiccontrol.register.domain.usecase
 
-import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.model.RegisterGlicemicLevelRequest
 import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.data.repository.RegisterGlicemicControlRepository
+import com.fiap.startupone.nutriglico.features.glicemiccontrol.register.domain.factory.RegisterGlicemicLevelRequestFactory
 
 class SaveGlicemicControlMeasurementUseCase(
-    private val repository: RegisterGlicemicControlRepository
+    private val repository: RegisterGlicemicControlRepository,
+    private val requestFactory: RegisterGlicemicLevelRequestFactory
 ) {
     suspend fun execute(
         glucoseLevel: String,
         date: String,
         measurementType: String
     ): Result<Boolean> {
-        if (glucoseLevel.isEmpty() || date.isEmpty() || measurementType.isEmpty()) {
-            return Result.failure(Exception("Preencha todos os campos"))
+        val requestResult = requestFactory.create(glucoseLevel, date, measurementType)
+        if (requestResult.isFailure) {
+            return Result.failure(requestResult.exceptionOrNull() ?: Exception("Erro desconhecido"))
         }
-
-        val level = try {
-            glucoseLevel.toInt()
-        } catch (e: NumberFormatException) {
-            return Result.failure(Exception("Valor da glicemia inválido"))
-        }
-
-        val request = RegisterGlicemicLevelRequest(
-            type = measurementType,
-            level = level,
-            registerDate = date
-        )
 
         return try {
-            val result = repository.registerGlicemicLevel(request)
+            val result = repository.registerGlicemicLevel(requestResult.getOrThrow())
             if (result.isSuccess) {
                 Result.success(true)
             } else {
