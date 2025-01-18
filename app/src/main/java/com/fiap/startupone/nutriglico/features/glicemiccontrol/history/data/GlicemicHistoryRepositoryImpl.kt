@@ -11,54 +11,55 @@ class GlicemicHistoryRepositoryImpl(
     private val service: GlicemicHistoryService
 ) : GlicemicHistoryRepository {
 
-    override suspend fun fetchHistory(): List<GlicemicHistoryResponse> {
+    override suspend fun fetchHistory(): Result<List<GlicemicHistoryResponse>> {
         return try {
             val response = service.getHistory()
-            response.ifEmpty {
-                emptyList()
-            }
+            Result.success(response.ifEmpty { emptyList() })
         } catch (e: IOException) {
             Log.e("API Error", "IOException: ${e.message}", e)
-            emptyList()
+            Result.failure(e)
         } catch (e: HttpException) {
             Log.e("API Error", "HttpException: ${e.message}", e)
-            emptyList()
+            Result.failure(e)
         }
     }
 
-    override suspend fun fetchDetails(id: String): GlicemicHistoryResponse {
+    override suspend fun fetchDetails(id: String): Result<GlicemicHistoryResponse> {
         return try {
-            service.getDetails(id)
+            val response = service.getDetails(id)
+            Result.success(response)
         } catch (e: IOException) {
             Log.e("API Error", "IOException: ${e.message}", e)
-            throw e
+            Result.failure(e)
         } catch (e: HttpException) {
             Log.e("API Error", "HttpException: ${e.message}", e)
-            throw e
+            Result.failure(e)
         }
     }
 
-    override suspend fun updateRecord(record: GlicemicHistoryResponse) {
-        try {
+    override suspend fun updateRecord(record: GlicemicHistoryResponse): Result<Unit> {
+        return try {
             service.updateRecord(record.id, record)
+            Result.success(Unit)
         } catch (e: IOException) {
             Log.e("API Error", "IOException: ${e.message}", e)
-            throw e
+            Result.failure(e)
         } catch (e: HttpException) {
             Log.e("API Error", "HttpException: ${e.message}", e)
-            throw e
+            Result.failure(e)
         }
     }
 
-    override suspend fun deleteRecord(id: String) {
-        try {
+    override suspend fun deleteRecord(id: String): Result<Unit> {
+        return try {
             service.deleteRecord(id)
+            Result.success(Unit)
         } catch (e: IOException) {
             Log.e("API Error", "IOException: ${e.message}", e)
-            throw e
+            Result.failure(e)
         } catch (e: HttpException) {
             Log.e("API Error", "HttpException: ${e.message}", e)
-            throw e
+            Result.failure(e)
         }
     }
 }

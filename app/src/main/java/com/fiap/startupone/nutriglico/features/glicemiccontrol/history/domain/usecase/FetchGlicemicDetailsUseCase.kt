@@ -6,7 +6,7 @@ import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.repo
 class FetchGlicemicDetailsUseCase(
     private val repository: GlicemicHistoryRepository
 ) {
-    suspend operator fun invoke(id: String): GlicemicHistoryResponse {
+    suspend operator fun invoke(id: String): Result<GlicemicHistoryResponse> {
         return repository.fetchDetails(id)
     }
 }

@@ -6,7 +6,7 @@ import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.repo
 class UpdateGlicemicRecordUseCase(
     private val repository: GlicemicHistoryRepository
 ) {
-    suspend operator fun invoke(record: GlicemicHistoryResponse) {
-        repository.updateRecord(record)
+    suspend operator fun invoke(record: GlicemicHistoryResponse): Result<Unit> {
+        return repository.updateRecord(record)
     }
 }

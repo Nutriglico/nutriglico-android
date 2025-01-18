@@ -20,8 +20,12 @@ class GlicemicHistoryViewModel(
 
         viewModelScope.launch {
             try {
-                val history = fetchGlicemicHistoryUseCase()
-                _historyState.value = HistoryState.Success(history)
+                val result = fetchGlicemicHistoryUseCase()
+                if (result.isSuccess) {
+                    _historyState.value = HistoryState.Success(result.getOrDefault(emptyList()))
+                } else {
+                    _historyState.value = HistoryState.Error(result.exceptionOrNull()?.message ?: "Unknown error")
+                }
             } catch (e: Exception) {
                 _historyState.value = HistoryState.Error(e.message ?: "Unknown error")
             }

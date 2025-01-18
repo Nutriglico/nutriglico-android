@@ -54,7 +54,7 @@ fun GlicemicHistoryScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Log.d("GlicemicHistoryScreen", "HistoryState: ${historyState.toString()}")
+                Log.d("GlicemicHistoryScreen", "HistoryState: $historyState")
                 when (historyState) {
                     is GlicemicHistoryViewModel.HistoryState.Loading -> {
                         CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
@@ -79,44 +79,5 @@ fun GlicemicHistoryScreen(
                 }
             }
         }
-    )
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun GlicemicHistoryScreenPreview() {
-    val navController = rememberNavController()
-    GlicemicHistoryScreen(
-        viewModel = GlicemicHistoryViewModel(
-            FetchGlicemicHistoryUseCase(
-                repository = object : GlicemicHistoryRepository {
-
-                    override suspend fun fetchHistory(): List<GlicemicHistoryResponse> {
-                        return listOf()
-                    }
-
-                    override suspend fun fetchDetails(id: String): GlicemicHistoryResponse {
-                        return GlicemicHistoryResponse(
-                            id = "",
-                            level = 0,
-                            registerDate = "",
-                            type = "",
-                            rate = "",
-                            colorRate = ""
-                        )
-                    }
-
-                    override suspend fun updateRecord(record: GlicemicHistoryResponse) {
-
-                    }
-
-                    override suspend fun deleteRecord(id: String) {
-
-                    }
-                }
-            )
-        ),
-        navController = navController,
-        onItemClick = {}
     )
 }

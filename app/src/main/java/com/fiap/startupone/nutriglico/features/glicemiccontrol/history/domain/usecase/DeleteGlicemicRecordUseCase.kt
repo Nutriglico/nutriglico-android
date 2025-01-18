@@ -5,7 +5,7 @@ import com.fiap.startupone.nutriglico.features.glicemiccontrol.history.data.repo
 class DeleteGlicemicRecordUseCase(
     private val repository: GlicemicHistoryRepository
 ) {
-    suspend operator fun invoke(id: String) {
-        repository.deleteRecord(id)
+    suspend operator fun invoke(id: String): Result<Unit> {
+        return repository.deleteRecord(id)
     }
 }
